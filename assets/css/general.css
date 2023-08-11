@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	transition: all 0.1s;
+	letter-spacing: 0.7px;
+}
+
+body {
+	overflow-x: hidden;
+	@apply bg-background;
+}
+
+html {
+	font-size: 14px;
+	font-weight: 400;
+	/* font-family: 'Roboto', sans-serif !important; */
+	font-family: 'Barlow Semi Condensed', sans-serif !important;
+	@apply text-gray-500;
+}
+
+body::-webkit-scrollbar,
+.scroll_control::-webkit-scrollbar {
+	width: 9px;
+	height: 9px;
+}
+
+body:hover::-webkit-scrollbar,
+.scroll_control:hover::-webkit-scrollbar {
+	/* width: 14px;
+	height: 14px; */
+}
+
+.scroll_control::-webkit-scrollbar-track {
+	/* box-shadow: inset 0 0 3px rgba(0, 0, 0, .2); */
+	border-radius: 10px;
+
+}
+
+body::-webkit-scrollbar-thumb,
+.scroll_control::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, .2);
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+body::-webkit-scrollbar-thumb:hover,
+.scroll_control::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, .4);
+}
+
+.animation_y_intro {
+	position: relative;
+	overflow-y: hidden;
+}
+
+.animation_y_intro::before {
+	content: "";
+	background-color: #fff;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	transform: translateY(100%) scaleY(0);
+	animation: introY 0.3s ease-in-out;
+}
+
+@keyframes introY {
+	from {
+		transform: translateY(0);
+	}
+}
