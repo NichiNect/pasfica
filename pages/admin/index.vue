@@ -1,5 +1,5 @@
 <script setup>
-import { faCube, faCubes } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCube, faCubes } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * * Variables
@@ -74,6 +74,18 @@ const menu = [
 
 <template>
   <BaseLayoutSidebar :menu="menu" basePath="/admin" :isClose="sidebarActive ? false : true">
-
+    <BaseLayoutNavbar>
+      <div class='flex gap-4 items-center'>
+        <button class="relative overflow-hidden w-[45px] aspect-square flex items-center justify-center text-primary text-xl hover:shadow-lg hover:bg-opacity-10 cursor-pointer rounded-lg"
+          @click="() => sidebarActive = !sidebarActive"
+        >
+          <FontAwesomeIcon :icon="faBars" class="w-[45px]" />
+        </button>
+      </div>
+    </BaseLayoutNavbar>
+  
+    <div class='w-full bg-white py-48 rounded-xl shadow mt-8'>
+      <p class="text-center">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+    </div>
   </BaseLayoutSidebar>
 </template>

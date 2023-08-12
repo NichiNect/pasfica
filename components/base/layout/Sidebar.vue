@@ -53,7 +53,7 @@ const sidebarSubMenuHandler = (menuItem, menuItemKey, menuGroupKey) => {
                 }
               }">
                 <h6 class="text-lg text-gray-500 dark:text-gray-300 hidden lg:block">{{ menuGroup.head }}</h6>
-                <div className='w-full h-1 bg-gray-300 rounded-full block lg:hidden'></div>
+                <div class='w-full h-1 bg-gray-300 rounded-full block lg:hidden'></div>
                 <div v-if="menuGroup.collapse">
                   <FontAwesomeIcon :icon="faChevronDown" :class="['text-lg text-gray-500 dark:text-gray-300', showMenu[0] && showMenu.includes(menuGroupKey) ? 'rotate-180' : '']" />
                 </div>
@@ -116,6 +116,10 @@ const sidebarSubMenuHandler = (menuItem, menuItemKey, menuGroupKey) => {
           </div>
         </div>
       </div>
+    </div>
+
+    <div :class="[isClose ? 'col-span-9' : 'col-span-6 xl:col-span-7', 'py-4 max-h-screen overflow-auto scroll_control']">
+      <slot />
     </div>
   </div>
 </template>
