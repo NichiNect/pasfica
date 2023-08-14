@@ -2,6 +2,10 @@
 module.exports = {
   content: [],
   theme: {
+    container: {
+      center: true,
+      padding: '16px'
+    },
     extend: {
       colors: {
         background: '#eaeaea',

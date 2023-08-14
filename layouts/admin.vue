@@ -33,8 +33,8 @@ const menu = [
       },
       {
         icon: faCube,
-        label: "Menu 2",
-        path: "/2",
+        label: "Menu 2 (Card)",
+        path: "/card",
       },
       {
         icon: faCube,
@@ -84,7 +84,7 @@ const menu = [
       </div>
     </BaseLayoutNavbar>
   
-    <div class='w-full bg-white py-48 rounded-xl shadow mt-8'>
+    <div class='w-full bg-white py-5 rounded-xl shadow mt-8'>
       <slot />
     </div>
   </BaseLayoutSidebar>
