@@ -12,6 +12,7 @@ module.exports = {
         primary: '#3b82f6',
         lightPrimary: '#93c5fd',
         secondary: '#2dd4bf',
+        danger: '#ef4444',
       },
     },
   },
