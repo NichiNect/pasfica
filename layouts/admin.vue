@@ -43,8 +43,8 @@ const menu = [
       },
       {
         icon: faCube,
-        label: "Menu 4",
-        path: "/4",
+        label: "Menu 4 (Button)",
+        path: "/button",
       },
     ],  
   },
