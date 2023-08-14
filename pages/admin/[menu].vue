@@ -1,4 +1,12 @@
 <script setup>
+
+/**
+ * * Layouts
+ */
+ definePageMeta({
+  layout: "admin",
+});
+
 /**
  * * Variables
  */
@@ -8,5 +16,7 @@ const routeParams = route.params?.menu;
 </script>
 
 <template>
-  {{ 'Admin/' + routeParams }}
+  <div class="text-center">
+    {{ 'Admin/' + routeParams }}
+  </div>
 </template>
