@@ -38,8 +38,8 @@ const menu = [
       },
       {
         icon: faCube,
-        label: "Menu 3",
-        path: "/3",
+        label: "Menu 3 (Modal)",
+        path: "/modal",
       },
       {
         icon: faCube,
