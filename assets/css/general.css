@@ -70,3 +70,29 @@ body::-webkit-scrollbar-thumb:hover,
 		transform: translateY(0);
 	}
 }
+
+.form_control {
+	@apply w-full relative;
+}
+
+.form_control label {
+	@apply block font-medium mb-1.5;
+}
+
+.form_control label.active {
+	@apply -mt-8 text-base text-gray-400;
+}
+
+.form_control input {
+	background: var(--background);
+	@apply py-2 2xl:py-3 w-full text-lg font-medium rounded-xl transition duration-150 ease-in-out focus:outline-none border-[1px] border-gray-300 placeholder:font-normal;
+}
+
+.form_control input:focus-visible,
+textarea.form_control:focus-visible {
+	@apply border-primary;
+}
+
+.form_control input.invalid {
+	@apply border-danger;
+}

@@ -20,6 +20,9 @@ const clickOutsideHandler = (e) => {
   }
 }
 
+/**
+ * * Hooks & Watcher
+ */
 watch([wrapProfile, profile], () => {
   document.addEventListener("mousedown", clickOutsideHandler);
 });

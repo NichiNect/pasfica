@@ -17,12 +17,12 @@ const menu = [
       },
       {
         icon: faCube,
-        label: "Menu 1",
+        label: "Menu 1 (Input)",
         submenu: [
           {
             icon: faCube,
-            label: "Menu 1.1",
-            path: "/1.1",
+            label: "Menu 1.1 (Input Component)",
+            path: "/input",
           },
           {
             icon: faCube,
