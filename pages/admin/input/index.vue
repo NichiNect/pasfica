@@ -1,5 +1,5 @@
 <script setup>
-import { faEnvelope, faKey, faUser, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+import { faKey, faPhoneAlt, faUser, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * * Layouts
@@ -38,6 +38,15 @@ import { faEnvelope, faKey, faUser, faWindowRestore } from '@fortawesome/free-so
       :suggestionLists="[
         'Google Chrome', 'Chromium', 'Edge', 'Mozilla Firefox', 'Brave', 'Opera', 'Vivaldi'
       ]"
+    />
+
+    <BaseInputPhone 
+      name="phoneNumber"
+      label="Phone Number"
+      placeholder="Fill your phone number.."
+      iconPosition="left"
+      :icon="faPhoneAlt"
+      useFormat="62"
     />
   </div>
 </template>
