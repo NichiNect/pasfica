@@ -1,5 +1,5 @@
 <script setup>
-import { faKey, faPhoneAlt, faSortAmountAsc, faUser, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+import { faKey, faMoneyBillWave, faPhoneAlt, faSortAmountAsc, faUser, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * * Layouts
@@ -57,6 +57,14 @@ import { faKey, faPhoneAlt, faSortAmountAsc, faUser, faWindowRestore } from '@fo
       useFormat="62"
       minValue="0"
       maxValue="10"
+    />
+    <BaseInputCurrency 
+      name="price"
+      label="Price"
+      placeholder="Fill price.."
+      iconPosition="left"
+      :icon="faMoneyBillWave"
+      minValue="0"
     />
   </div>
 </template>
