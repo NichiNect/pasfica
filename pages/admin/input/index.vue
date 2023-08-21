@@ -1,5 +1,5 @@
 <script setup>
-import { faKey, faPhoneAlt, faUser, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+import { faKey, faPhoneAlt, faSortAmountAsc, faUser, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * * Layouts
@@ -47,6 +47,16 @@ import { faKey, faPhoneAlt, faUser, faWindowRestore } from '@fortawesome/free-so
       iconPosition="left"
       :icon="faPhoneAlt"
       useFormat="62"
+    />
+    <BaseInputNumber 
+      name="counter"
+      label="Counter Amount"
+      placeholder="Fill your amount number.."
+      iconPosition="right"
+      :icon="faSortAmountAsc"
+      useFormat="62"
+      minValue="0"
+      maxValue="10"
     />
   </div>
 </template>

@@ -1,7 +1,4 @@
 <script setup>
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
-
 /**
  * * Variables
  */
@@ -14,7 +11,7 @@ const focus = ref(false);
 const inputValue = ref('');
 
 /**
- * Hooks & Watcher
+ * * Hooks & Watcher
  */
 onBeforeMount(() => {
   if (props.inputValue) {
