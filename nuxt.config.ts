@@ -2,7 +2,10 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+  ],
+  plugins: [
+    { src: '~/plugins/vcalendar.js', mode: 'client' },
   ],
   css: [
     '@fortawesome/fontawesome-svg-core/styles.css',

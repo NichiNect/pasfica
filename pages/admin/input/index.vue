@@ -1,5 +1,5 @@
 <script setup>
-import { faKey, faMoneyBillWave, faPhoneAlt, faSortAmountAsc, faUser, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faKey, faMoneyBillWave, faPhoneAlt, faSortAmountAsc, faUser, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * * Layouts
@@ -66,5 +66,16 @@ import { faKey, faMoneyBillWave, faPhoneAlt, faSortAmountAsc, faUser, faWindowRe
       :icon="faMoneyBillWave"
       minValue="0"
     />
+
+    <!-- <VCalendar mode="date" :highlight="true" /> -->
+    <BaseInputDate 
+      name="datePicker"
+      label="Date Picker"
+      placeholder="Fill date picker.."
+      iconPosition="left"
+      :icon="faCalendarAlt"
+      mode="dateTime"
+      useFormat="DD-MM-YYYY HH:mm:ss"
+      />
   </div>
 </template>
