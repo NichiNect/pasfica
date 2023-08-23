@@ -8,6 +8,11 @@ import { faCalendarAlt, faKey, faMoneyBillWave, faPhoneAlt, faSortAmountAsc, faU
   layout: "admin",
 });
 
+/**
+ * * Variables
+ */
+const remember = ref(false);
+
 </script>
 
 <template>
@@ -84,6 +89,16 @@ import { faCalendarAlt, faKey, faMoneyBillWave, faPhoneAlt, faSortAmountAsc, faU
       :icon="faCalendarAlt"
       mode="date"
       useFormat="DD-MM-YYYY"
+    />
+    <BaseInputCheckbox
+      name="rememberMe"
+      label="Remember Me"
+      color="success"
+      size="md"
+      :checked="remember"
+      @onChange="() => {
+        remember = !remember
+      }"
     />
   </div>
 </template>

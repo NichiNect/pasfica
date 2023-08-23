@@ -134,6 +134,7 @@ onMounted(() => {
                 ]
               }]"
               class="w-full"
+              expanded
               :mode="props.mode"
               v-model.range="dateRef"
               :is24hr="true"
