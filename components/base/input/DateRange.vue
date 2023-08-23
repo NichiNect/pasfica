@@ -11,16 +11,22 @@ const props = defineProps([
 const emit = defineEmits(['onFocus', 'onBlur', 'onChange']);
 
 const focus = ref(false);
-const inputValue = ref('');
+const inputValue = ref([]);
 const formatDate = ref(null);
-const dateRef = ref(new Date());
+const dateRef = ref({
+  start: moment(new Date()).subtract(3, 'day').format(),
+  end: moment(new Date()).format(),
+});
 
 /**
  * * Methods
  */
 const changeDate = (e) => {
-  // inputValue.value = moment(e.date).format(formatDate.value);
-  inputValue.value = moment(dateRef.value).format(formatDate.value);
+  inputValue.value = [
+    moment(dateRef.value.start).format(formatDate.value),
+    moment(dateRef.value.end).format(formatDate.value)
+  ];
+
   emit('onChange', input.value);
 }
 
@@ -67,12 +73,15 @@ onMounted(() => {
     >
       {{ props.label }}
     </label>
-    
+
     <div class="relative">
       <input 
         type="text"
-        :inputmode="'numeric'"
-        :value="inputValue"
+        :value="
+          (inputValue && inputValue.length > 0)
+          ? `${moment(inputValue[0], formatDate, true).format(formatDate)} - ${moment(inputValue[1], formatDate, true).format(formatDate)}`
+          : ''
+        "
         :placeholder="props.placeholder"
         :class="[
           (props.iconPosition == 'right') ? 'pl-5 pr-14' : (props.icon) ? 'pl-16 pr-5' : 'pl-5 pr-5',
@@ -115,10 +124,19 @@ onMounted(() => {
             <VDatePicker
               :attributes="[{
                 highlight: 'blue',
-                dates: [inputValue ? moment(inputValue, formatDate, true).format() : new Date()]
+                dates: [
+                  inputValue[0]
+                    ? moment(inputValue[0], formatDate, true).format() 
+                    : new Date(),
+                  inputValue[1]
+                    ? moment(inputValue[1], formatDate, true).format() 
+                    : new Date(),
+                ]
               }]"
+              class="w-full"
               :mode="props.mode"
-              v-model="dateRef"
+              v-model.range="dateRef"
+              :is24hr="true"
               @update:modelValue="changeDate"
             />
           </ClientOnly>

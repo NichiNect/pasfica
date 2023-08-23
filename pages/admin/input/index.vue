@@ -67,7 +67,6 @@ import { faCalendarAlt, faKey, faMoneyBillWave, faPhoneAlt, faSortAmountAsc, faU
       minValue="0"
     />
 
-    <!-- <VCalendar mode="date" :highlight="true" /> -->
     <BaseInputDate 
       name="datePicker"
       label="Date Picker"
@@ -76,6 +75,15 @@ import { faCalendarAlt, faKey, faMoneyBillWave, faPhoneAlt, faSortAmountAsc, faU
       :icon="faCalendarAlt"
       mode="dateTime"
       useFormat="DD-MM-YYYY HH:mm:ss"
-      />
+    />
+    <BaseInputDateRange
+      name="dateRangePicker"
+      label="Date Range Picker"
+      placeholder="Fill date range picker.."
+      iconPosition="right"
+      :icon="faCalendarAlt"
+      mode="date"
+      useFormat="DD-MM-YYYY"
+    />
   </div>
 </template>
