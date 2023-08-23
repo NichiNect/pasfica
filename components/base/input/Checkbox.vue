@@ -16,9 +16,6 @@ const checkboxSize = {
   xs: 'text-xs'
 }
 
-onMounted(() => {
-  console.log(props.color)
-})
 </script>
 
 <template>

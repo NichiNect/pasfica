@@ -100,5 +100,11 @@ const remember = ref(false);
         remember = !remember
       }"
     />
+
+    <BaseInputTextarea
+      name="note"
+      label="Note"
+      placeholder="Fill note.."
+    />
   </div>
 </template>

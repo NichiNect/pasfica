@@ -87,8 +87,7 @@ watch(inputValue, (current, before) => {
         :value="inputValue"
         :placeholder="props.placeholder"
         :class="[
-          (props.iconPosition == 'right') ? 'pl-14 pr-14' : (props.icon) ? 'pl-24 pr-5' : 'pl-14 pr-5',
-          focus ? 'bg-primary' : ''
+          (props.iconPosition == 'right') ? 'pl-14 pr-14' : (props.icon) ? 'pl-24 pr-5' : 'pl-14 pr-5'
         ]"
         :name="props.name"
         :id="props.name"

@@ -118,8 +118,7 @@ onBeforeMount(() => {
         :name="props.name"
         :id="props.id"
         :class="[
-          (props.iconPosition == 'right') ? 'pl-5 pr-14' : (props.icon) ? 'pl-16 pr-5' : 'pl-5 pr-5',
-          focus ? 'bg-primary' : ''
+          (props.iconPosition == 'right') ? 'pl-5 pr-14' : (props.icon) ? 'pl-16 pr-5' : 'pl-5 pr-5'
         ]"
         @focus="(e) => {
           focus = true;

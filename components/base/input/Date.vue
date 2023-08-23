@@ -21,7 +21,7 @@ const dateRef = ref(new Date());
 const changeDate = (e) => {
   // inputValue.value = moment(e.date).format(formatDate.value);
   inputValue.value = moment(dateRef.value).format(formatDate.value);
-  emit('onChange', input.value);
+  emit('onChange', inputValue.value);
 }
 
 const onFocusHandler = () => {
@@ -75,8 +75,7 @@ onMounted(() => {
         :value="inputValue"
         :placeholder="props.placeholder"
         :class="[
-          (props.iconPosition == 'right') ? 'pl-5 pr-14' : (props.icon) ? 'pl-16 pr-5' : 'pl-5 pr-5',
-          focus ? 'bg-primary' : ''
+          (props.iconPosition == 'right') ? 'pl-5 pr-14' : (props.icon) ? 'pl-16 pr-5' : 'pl-5 pr-5'
         ]"
         :name="props.name"
         :id="props.name"
