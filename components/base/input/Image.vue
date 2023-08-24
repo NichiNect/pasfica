@@ -80,7 +80,7 @@ const onChangeFileHandler = async (e) => {
         }"
         :class="[
           'relative flex flex-col gap-y-5 justify-center items-center m-auto rounded-lg bg-cover bg-no-repeat',
-          'border-b-[3px] bg-background',
+          'border-b-[3px] bg-gray-50',
           dragActive ? 'border-primary' : 'border-gray-300',
           `text-gray-400 w-80 aspect-${aspect ? aspect : 'video'}`,
           props.disabled ? '' : 'cursor-pointer',
