@@ -106,5 +106,10 @@ const remember = ref(false);
       label="Note"
       placeholder="Fill note.."
     />
+    <BaseInputImage
+      name="avatar"
+      label="Avatar"
+      aspect="square"
+    />
   </div>
 </template>

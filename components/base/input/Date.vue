@@ -110,17 +110,16 @@ onMounted(() => {
           'right-0 translate-x-1/2'
         ]">
 
-          <ClientOnly>
-            <VDatePicker
-              :attributes="[{
-                highlight: 'blue',
-                dates: [inputValue ? moment(inputValue, formatDate, true).format() : new Date()]
-              }]"
-              :mode="props.mode"
-              v-model="dateRef"
-              @update:modelValue="changeDate"
-            />
-          </ClientOnly>
+          <VDatePicker
+            :attributes="[{
+              highlight: 'blue',
+              dates: [inputValue ? moment(inputValue, formatDate, true).format() : new Date()]
+            }]"
+            expanded
+            :mode="props.mode"
+            v-model="dateRef"
+            @update:modelValue="changeDate"
+          />
         </div>
       </div>
     </div>

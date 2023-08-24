@@ -119,7 +119,6 @@ onMounted(() => {
           'right-0 translate-x-1/2'
         ]">
 
-          <ClientOnly>
             <VDatePicker
               :attributes="[{
                 highlight: 'blue',
@@ -139,7 +138,6 @@ onMounted(() => {
               :is24hr="true"
               @update:modelValue="changeDate"
             />
-          </ClientOnly>
         </div>
       </div>
     </div>

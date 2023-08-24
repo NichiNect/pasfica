@@ -56,8 +56,7 @@ onMounted(() => {
     </label>
   
     <div class="relative">
-      <ClientOnly>
-        <textarea 
+      <textarea 
           :id="props.name" 
           :name="props.name"
           :placeholder="props.placeholder"
@@ -67,7 +66,6 @@ onMounted(() => {
           @blur="onBlurHandler"
           @input="onInputChangeHandler"
         >{{ inputValue }}</textarea>
-      </ClientOnly>
     </div>
   </div>
 </template>
