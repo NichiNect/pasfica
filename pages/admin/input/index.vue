@@ -111,5 +111,10 @@ const remember = ref(false);
       label="Avatar"
       aspect="square"
     />
+    <BaseInputFile
+      name="uploadLetter"
+      label="Upload your legal letter.."
+      aria-label="uploadLetter"
+    />
   </div>
 </template>
