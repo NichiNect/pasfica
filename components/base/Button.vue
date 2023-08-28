@@ -11,12 +11,14 @@ const btn = ref(null);
 const buttonVariant = {
   solid: {
     primary: 'bg-primary text-white',
+    lightPrimary: 'bg-lightPrimary text-white',
     secondary: 'bg-secondary text-white',
     danger: 'bg-danger text-white',
     success: 'bg-success text-white',
   },
   outline: {
     primary: 'border-2 border-primary text-primary',
+    lightPrimary: 'border-2 border-lightPrimary text-lightPrimary',
     secondary: 'border-2 border-secondary text-secondary',
     danger: 'border-2 border-danger text-danger',
     success: 'border-2 border-success text-success',

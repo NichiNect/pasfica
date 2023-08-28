@@ -22,19 +22,19 @@ const clickHandler = () => {
       <div class="flex items-start flex-wrap gap-5">
         <BaseButton
           label="Button 1"
-          bg="primary"
+          color="primary"
           size="sm"
           @onClick="clickHandler"
         />
         <BaseButton
           label="Button 2"
-          bg="primary"
+          color="primary"
           size="sm"
           variant="outline"
           @onClick="clickHandler"
         />
         <BaseButton
-          bg="primary"
+          color="primary"
           size="sm"
           @onClick="clickHandler"
         >
@@ -43,21 +43,21 @@ const clickHandler = () => {
         </BaseButton>
         <BaseButton
           label="Button 4"
-          bg="primary"
+          color="primary"
           size="sm"
           rounded="full"
           @onClick="clickHandler"
         />
         <BaseButton
           label="Button 4"
-          bg="primary"
+          color="primary"
           size="sm"
           rounded="full"
           variant="outline"
           @onClick="clickHandler"
         />
         <BaseButton
-          bg="primary"
+          color="primary"
           size="sm"
           rounded="full"
           @onClick="clickHandler"
@@ -66,7 +66,7 @@ const clickHandler = () => {
           Button 3
         </BaseButton>
         <BaseButton
-          bg="primary"
+          color="primary"
           size="sm"
           @onClick="clickHandler"
         >
@@ -76,17 +76,17 @@ const clickHandler = () => {
       <div class='flex items-start flex-wrap gap-5'>
         <BaseButton
           label="Button 1"
-          bg="primary"
+          color="primary"
           size="md"
         />
         <BaseButton
           label="Button 2"
-          bg="primary"
+          color="primary"
           size="md"
           variant="outline"
         />
         <BaseButton
-          bg="primary"
+          color="primary"
           size="md"
         >
           <FontAwesomeIcon :icon="faShareFromSquare" class="mr-1" />
@@ -94,19 +94,19 @@ const clickHandler = () => {
         </BaseButton>
         <BaseButton
           label="Button 4"
-          bg="primary"
+          color="primary"
           size="md"
           rounded="full"
         />
         <BaseButton
           label="Button 4"
-          bg="primary"
+          color="primary"
           size="md"
           rounded="full"
           variant="outline"
         />
         <BaseButton
-          bg="primary"
+          color="primary"
           size="md"
           rounded="full"
         >
@@ -114,7 +114,7 @@ const clickHandler = () => {
           Button 3
         </BaseButton>
         <BaseButton
-          bg="primary"
+          color="primary"
           size="md"
         >
           <FontAwesomeIcon :icon="faShareFromSquare" />
@@ -123,17 +123,17 @@ const clickHandler = () => {
       <div class='flex items-start flex-wrap gap-5'>
         <BaseButton
           label="Button 1"
-          bg="primary"
+          color="primary"
           size="lg"
         />
         <BaseButton
           label="Button 2"
-          bg="primary"
+          color="primary"
           size="lg"
           variant="outline"
         />
         <BaseButton
-          bg="primary"
+          color="primary"
           size="lg"
         >
           <FontAwesomeIcon :icon="faShareFromSquare" class="mr-1" />
@@ -141,19 +141,19 @@ const clickHandler = () => {
         </BaseButton>
         <BaseButton
           label="Button 4"
-          bg="primary"
+          color="primary"
           size="lg"
           rounded="full"
         />
         <BaseButton
           label="Button 4"
-          bg="primary"
+          color="primary"
           size="lg"
           rounded="full"
           variant="outline"
         />
         <BaseButton
-          bg="primary"
+          color="primary"
           size="lg"
           rounded="full"
         >
@@ -161,7 +161,7 @@ const clickHandler = () => {
           Button 3
         </BaseButton>
         <BaseButton
-          bg="primary"
+          color="primary"
           size="lg"
         >
           <FontAwesomeIcon :icon="faShareFromSquare" />

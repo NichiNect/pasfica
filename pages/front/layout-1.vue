@@ -2,5 +2,7 @@
 </script>
 
 <template>
+  <BaseLayoutNavbarFront />
 
+  
 </template>
