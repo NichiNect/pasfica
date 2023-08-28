@@ -53,12 +53,13 @@ const menu = [
       submenu: [
         {
           icon: faCubes,
-          label: "Menu 5",
+          label: "Menu 5 (Layouts)",
           submenu: [
             {
               icon: faCube,
-              label: "Menu 5.1",
-              path: "/5.1",
+              label: "Menu 5.1 (Front Layout 1)",
+              path: "/front/layout-1",
+              resetPath: true
             },
             {
               icon: faCube,

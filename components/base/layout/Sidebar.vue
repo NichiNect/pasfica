@@ -15,7 +15,13 @@ const showSubMenu = ref([]);
 const sidebarSubMenuHandler = (menuItem, menuItemKey, menuGroupKey) => {
   if (!menuItem.submenu || !menuItem.submenu[0] || menuItem.path) {
 
-    router.push({ path: `${props.basePath}${menuItem.path}` });
+    if (menuItem?.resetPath) {
+
+      router.push({ path: menuItem.path });
+    } else {
+
+      router.push({ path: `${props.basePath}${menuItem.path}` });
+    }
   } else {
 
     if (!showSubMenu.value[0] || !showSubMenu.value.includes(`${menuGroupKey}|${menuItemKey}`)) {
@@ -93,7 +99,7 @@ const sidebarSubMenuHandler = (menuItem, menuItemKey, menuGroupKey) => {
                       ]"
                     >
                       <div v-for="(subMenuItem, subMenuItemKey) in menuItem.submenu">
-                        <NuxtLink :to="`${basePath}${subMenuItem.path}`" :key="subMenuItemKey">
+                        <NuxtLink :to="subMenuItem?.resetPath ? subMenuItem.path : `${basePath}${subMenuItem.path}`" :key="subMenuItemKey">
                           <div :class="[
                             'flex items-center gap-5 mx-1 lg:mx-4 justify-center lg:justify-start lg:px-4 py-4 my-1 lg:my-2',
                             (`${basePath}${subMenuItem.path}` && router.currentRoute.value.path == `${basePath}${subMenuItem.path}`)

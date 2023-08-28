@@ -4,7 +4,7 @@ import { faCalendarAlt, faKey, faMoneyBillWave, faPhoneAlt, faSortAmountAsc, faU
 /**
  * * Layouts
  */
- definePageMeta({
+definePageMeta({
   layout: "admin",
 });
 

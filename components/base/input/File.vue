@@ -4,7 +4,7 @@ import { faFile, faFileArchive, faFileExcel, faFileImage, faFilePdf, faFileWord,
 /**
  * * Variables
  */
- const props = defineProps([
+const props = defineProps([
   'placeholder', 'inputValue', 'name', 'label', 'disabled', 'aspect'
 ]);
 const emit = defineEmits(['onChange']);
