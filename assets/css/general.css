@@ -84,7 +84,6 @@ body::-webkit-scrollbar-thumb:hover,
 }
 
 .form_control input {
-	/* background: var(--background); */
 	@apply py-2 2xl:py-3 w-full text-lg font-medium rounded-xl transition duration-150 ease-in-out focus:outline-none border-[1px] border-gray-300 placeholder:font-normal;
 }
 
@@ -95,4 +94,30 @@ textarea.form_control:focus-visible {
 
 .form_control input.invalid {
 	@apply border-danger;
+}
+
+/* Swiper */
+.swiper-button-next {
+	@apply h-full top-0 mt-0 w-16 right-0 text-gray-200 rounded-l-xl scale-50 !important;
+}
+
+.swiper-button-next:hover{
+	@apply scale-100 !important;
+}
+
+
+.swiper-button-prev {
+	@apply h-full top-0 mt-0 w-16 left-0 text-gray-200 rounded-l-xl scale-50 !important;
+}
+
+.swiper-button-prev:hover{
+	@apply scale-100 !important;
+}
+
+.banner .swiper-button-next:hover::after{
+	@apply px-5 py-4 rounded-lg text-white;
+}
+
+.banner .swiper-button-prev:hover::after{
+	@apply px-5 py-4 rounded-lg text-white;
 }
