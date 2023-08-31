@@ -1,0 +1,39 @@
+.table {
+    width: 100%;
+    border-spacing: 0 .75rem;
+    border-collapse: separate;
+    text-indent: 0;
+}
+
+.table > tbody > tr {
+    @apply relative shadow rounded-xl;
+	/* @apply hover:shadow-sm hover:bg-red-100 hover:rounded-xl; */
+}
+
+.table > tbody > tr:hover {
+    @apply shadow-md rounded-xl bg-gray-50;
+}
+
+
+.table > tbody > tr::after {
+    @apply absolute;
+    @apply border border-gray-200 rounded-xl;
+}
+
+.table > tbody > tr:hover::after {
+    @apply bg-gray-200;
+}
+
+
+.table > thead > tr > th,
+.table > tbody > tr > td {
+	@apply px-5 whitespace-nowrap;
+}
+
+.table > thead > tr > th {
+    @apply capitalize text-left;
+}
+
+.table > tbody > tr > td {
+	@apply py-5;
+}

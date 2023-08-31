@@ -84,7 +84,7 @@ body::-webkit-scrollbar-thumb:hover,
 }
 
 .form_control input {
-	@apply py-2 2xl:py-3 w-full text-lg font-medium rounded-xl transition duration-150 ease-in-out focus:outline-none border-[1px] border-gray-300 placeholder:font-normal;
+	@apply py-2 w-full text-lg font-medium rounded-xl transition duration-150 ease-in-out focus:outline-none border-[1px] border-gray-300 placeholder:font-light placeholder:text-base;
 }
 
 .form_control input:focus-visible,

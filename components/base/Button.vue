@@ -24,10 +24,16 @@ const buttonVariant = {
     success: 'border-2 border-success text-success',
   },
   light: {
-    primary: 'bg-light-primary text-primary',
-    secondary: 'bg-light-secondary text-secondary',
-    danger: 'bg-light-danger text-danger',
-    success: 'bg-light-success text-success',
+    primary: 'bg-light-primary text-primary shadow',
+    secondary: 'bg-light-secondary text-secondary shadow',
+    danger: 'bg-light-danger text-danger shadow',
+    success: 'bg-light-success text-success shadow',
+  },
+  lightBordered: {
+    primary: 'bg-light-primary text-primary shadow border',
+    secondary: 'bg-light-secondary text-secondary shadow border',
+    danger: 'bg-light-danger text-danger shadow border',
+    success: 'bg-light-success text-success shadow border',
   },
 }
 const buttonSize = {

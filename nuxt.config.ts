@@ -10,7 +10,8 @@ export default defineNuxtConfig({
   ],
   css: [
     '@fortawesome/fontawesome-svg-core/styles.css',
-    '~/assets/css/general.css'
+    '~/assets/css/general.css',
+    '~/assets/css/table.css',
   ],
   runtimeConfig: {
     public: {

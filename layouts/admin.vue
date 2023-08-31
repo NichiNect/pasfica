@@ -68,6 +68,22 @@ const menu = [
             },
           ]
         },
+        {
+          icon: faCubes,
+          label: "Menu 6 (Tables)",
+          submenu: [
+            {
+              icon: faCube,
+              label: "Menu 6.1 (Table Default)",
+              path: "/tables/default",
+            },
+            {
+              icon: faCube,
+              label: "Menu 6.2",
+              path: "/6.2",
+            },
+          ]
+        },
       ],
     },
 ];
