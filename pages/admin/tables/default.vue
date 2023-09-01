@@ -7,6 +7,25 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 definePageMeta({
   layout: "admin",
 });
+
+/**
+ * * Variables
+ */
+const paginateData = ref({
+  total: 100,
+  paginateRow: 10,
+  pageActive: 1
+});
+
+/**
+ * * Methods
+ */
+const onPaginateChange = (data) => {
+
+  console.log('data emited', data);
+
+  paginateData.value = data;
+}
 </script>
 
 <template>
@@ -45,5 +64,14 @@ definePageMeta({
         </div>
       </template>
     </BaseTableDefault>
+  </div>
+
+  <div class="container my-5">
+    <BaseTablePagination 
+      :total="paginateData.total"
+      :paginateRow="paginateData.paginateRow"
+      :pageActive="paginateData.pageActive"
+      @onChange="onPaginateChange"
+    />
   </div>
 </template>
