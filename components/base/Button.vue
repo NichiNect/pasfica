@@ -24,23 +24,32 @@ const buttonVariant = {
     success: 'border-2 border-success text-success',
   },
   light: {
-    primary: 'bg-light-primary text-primary shadow',
-    secondary: 'bg-light-secondary text-secondary shadow',
-    danger: 'bg-light-danger text-danger shadow',
-    success: 'bg-light-success text-success shadow',
+    primary: 'bg-lightPrimary text-primary shadow',
+    secondary: 'bg-lightSecondary text-secondary shadow',
+    danger: 'bg-lightDanger text-danger shadow',
+    success: 'bg-lightSuccess text-success shadow',
   },
   lightBordered: {
-    primary: 'bg-light-primary text-primary shadow border',
-    secondary: 'bg-light-secondary text-secondary shadow border',
-    danger: 'bg-light-danger text-danger shadow border',
-    success: 'bg-light-success text-success shadow border',
+    primary: 'bg-lightPrimary text-primary shadow border',
+    secondary: 'bg-lightSecondary text-secondary shadow border',
+    danger: 'bg-lightDanger text-danger shadow border',
+    success: 'bg-lightSuccess text-success shadow border',
   },
+  squareIcon: {
+    primary: 'bg-primary text-white shadow border'
+  }
 }
 const buttonSize = {
   lg: 'px-10 py-3 flex items-center gap-3',
   md: 'px-8 py-2 flex items-center gap-2',
   sm: 'px-8 pt-2 pb-2.5 text-xs flex items-center gap-2',
   xs: 'px-6 pt-1 pb-1.5 text-xs flex items-center gap-1.5',
+  square: {
+    lg: 'aspect-square w-[47px] flex items-center justify-center gap-3',
+    md: 'aspect-square w-[40px] flex items-center justify-center gap-2',
+    sm: 'aspect-square w-[35px] text-xs flex items-center justify-center gap-2',
+    xs: 'aspect-square w-[20px] text-xs flex items-center justify-center gap-1.5',
+  }
 }
 
 /**
@@ -58,7 +67,7 @@ const clickHandler = () => {
     :class="[
       'btn',
       buttonVariant[props.variant ?? 'solid'][props.color ?? 'primary'],
-      buttonSize[props.size ?? 'md'],
+      (props.variant == 'squareIcon') ? buttonSize['square'][props.size ?? 'md'] : buttonSize[props.size ?? 'md'],
       props.rounded ? `rounded-${props.rounded}` : 'rounded-lg',
       props.class ?? '',
     ]"

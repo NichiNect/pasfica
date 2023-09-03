@@ -68,6 +68,7 @@ const clickHandler = () => {
         <BaseButton
           color="primary"
           size="sm"
+          variant="squareIcon"
           @onClick="clickHandler"
         >
           <FontAwesomeIcon :icon="faShareFromSquare" />
@@ -116,6 +117,7 @@ const clickHandler = () => {
         <BaseButton
           color="primary"
           size="md"
+          variant="squareIcon"
         >
           <FontAwesomeIcon :icon="faShareFromSquare" />
         </BaseButton>
@@ -163,6 +165,7 @@ const clickHandler = () => {
         <BaseButton
           color="primary"
           size="lg"
+          variant="squareIcon"
         >
           <FontAwesomeIcon :icon="faShareFromSquare" />
         </BaseButton>
