@@ -3,7 +3,7 @@
  * * Variables
  */
 const props = defineProps([
-  'type', 'variant', 'color', 'class', 'label', 'size', 'disabled', 'rounded'
+  'type', 'variant', 'color', 'class', 'label', 'size', 'disabled', 'rounded', 'loading'
 ]);
 const emit = defineEmits(["onClick"]);
 const btn = ref(null);
@@ -69,14 +69,24 @@ const clickHandler = () => {
       buttonVariant[props.variant ?? 'solid'][props.color ?? 'primary'],
       (props.variant == 'squareIcon') ? buttonSize['square'][props.size ?? 'md'] : buttonSize[props.size ?? 'md'],
       props.rounded ? `rounded-${props.rounded}` : 'rounded-lg',
+      props.loading ? 'opacity-70' : '',
       props.class ?? '',
     ]"
-    :disabled="props.disabled ? true : false"
+    :disabled="(props.disabled || props.loading) ? true : false"
     @click="clickHandler"
   >
+    <div v-if="loading" :class="[
+      props.loading ? 'btn_loading' : '',
+      'w-3 h-3 justify-center text-center'
+    ]"></div>
     <span v-if="props.label">{{ props.label }}</span>
     <span v-else>
-      <slot />
+      <div v-if="props.variant == 'squareIcon' && !props.loading">
+        <slot />
+      </div>
+      <div v-else-if="props.variant != 'squareIcon'">
+        <slot />
+      </div>
     </span>
   </button>
 </template>
@@ -89,7 +99,7 @@ const clickHandler = () => {
 }
 
 .btn:disabled {
-	@apply bg-lightDisable text-disable;
+	/* @apply bg-lightDisable text-disable; */
 	cursor: default;
 	pointer-events: none;
 }
@@ -105,4 +115,23 @@ const clickHandler = () => {
 	filter: brightness(0.9);
 	box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, .25);
 }
+
+.btn_loading {
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 2.5px solid;
+  border-left: 2.5px solid;
+  border-right: 2.5px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 
 </style>

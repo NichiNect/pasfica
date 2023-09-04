@@ -27,6 +27,13 @@ const clickHandler = () => {
           @onClick="clickHandler"
         />
         <BaseButton
+          label="Button 1"
+          color="primary"
+          size="sm"
+          :loading="true"
+          @onClick="clickHandler"
+        />
+        <BaseButton
           label="Button 2"
           color="primary"
           size="sm"
@@ -68,7 +75,26 @@ const clickHandler = () => {
         <BaseButton
           color="primary"
           size="sm"
+          rounded="full"
+          :loading="true"
+          @onClick="clickHandler"
+        >
+          <FontAwesomeIcon :icon="faShareFromSquare" class="mr-1" />
+          Button 3
+        </BaseButton>
+        <BaseButton
+          color="primary"
+          size="sm"
           variant="squareIcon"
+          @onClick="clickHandler"
+        >
+          <FontAwesomeIcon :icon="faShareFromSquare" />
+        </BaseButton>
+        <BaseButton
+          color="primary"
+          size="sm"
+          variant="squareIcon"
+          :loading="true"
           @onClick="clickHandler"
         >
           <FontAwesomeIcon :icon="faShareFromSquare" />
