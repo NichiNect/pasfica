@@ -4,6 +4,7 @@ import { faBars, faCube, faCubes } from '@fortawesome/free-solid-svg-icons';
 /**
  * * Variables
  */
+const route = useRoute();
 const sidebarActive = ref(true);
 const menu = [
   {
@@ -87,6 +88,46 @@ const menu = [
       ],
     },
 ];
+const breadcrumb = ref([]);
+
+/**
+ * * Methods
+ */
+const capitalizeString = (s) => {
+  if (typeof s !== 'string') {
+    return '';
+  }
+
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/**
+ * * Hooks & Watchers
+ */
+watchEffect(() => {
+  let paths = route.path?.split('/');
+  let breadcrumbItems = [];
+
+  paths.map((path, key) => {
+
+    let link = '';
+    paths.filter((_, linkKey) => linkKey <= key)
+      .map((pathLink) => {
+      if (pathLink) {
+        link += "/" + pathLink
+      }
+    });
+
+    if (path) {
+      breadcrumbItems.push({
+        link: link,
+        label: capitalizeString(path.replace("-", " "))
+      })
+    }
+  });
+
+  breadcrumb.value = breadcrumbItems;
+});
 </script>
 
 <template>
@@ -98,6 +139,12 @@ const menu = [
         >
           <FontAwesomeIcon :icon="faBars" class="w-[45px]" />
         </button>
+
+        <div>
+          <BaseNavigatorBreadcrumb
+            :items="breadcrumb"
+          />
+        </div>
       </div>
     </BaseLayoutNavbar>
   
