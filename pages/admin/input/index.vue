@@ -95,9 +95,11 @@ const remember = ref(false);
       label="Remember Me"
       color="success"
       size="md"
+      inputValue="remember"
       :checked="remember"
-      @onChange="() => {
+      @onChange="(data) => {
         remember = !remember
+        console.log(data);
       }"
     />
 
@@ -115,6 +117,14 @@ const remember = ref(false);
       name="uploadLetter"
       label="Upload your legal letter.."
       aria-label="uploadLetter"
+    />
+    <BaseInputRadio
+      name="hoho"
+      label="Accept"
+      inputValue="agree"
+      @onChange="(data) => {
+        console.log(data);
+      }"
     />
   </div>
 </template>
