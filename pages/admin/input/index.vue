@@ -126,5 +126,68 @@ const remember = ref(false);
         console.log(data);
       }"
     />
+    <BaseInputSelect
+      name="role"
+      label="Role"
+      placeholder="Fill role.."
+      iconPosition="left"
+      :icon="faWindowRestore"
+      :searchable="true"
+      :options="[
+        {
+          label: 'Superadmin',
+          value: 1
+        },
+        {
+          label: 'Admin',
+          value: 2
+        },
+        {
+          label: 'User',
+          value: 3
+        },
+        {
+          label: 'Membership',
+          value: 4
+        },
+        {
+          label: 'Officer',
+          value: 5
+        }
+      ]"
+      @onChange="(data) => {
+        console.log('valdata', data);
+      }"
+    />
+    <BaseInputSelect
+      name="favoriteOS"
+      label="Favorite Operating System"
+      placeholder="Choose one.."
+      :options="[
+        {
+          label: 'Linux',
+          value: 1
+        },
+        {
+          label: 'MacOS',
+          value: 2
+        },
+        {
+          label: 'Windows',
+          value: 3
+        },
+        {
+          label: 'Android',
+          value: 4
+        },
+        {
+          label: 'iOS',
+          value: 5
+        }
+      ]"
+      @onChange="(data) => {
+        console.log('valdata', data);
+      }"
+    />
   </div>
 </template>
