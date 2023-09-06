@@ -5,7 +5,7 @@
 const props = defineProps([
   'type', 'placeholder', 'inputValue', 'name', 'label', 'icon', 'iconPosition', 'disabled', 'suggestionLists'
 ]);
-const emit = defineEmits(['onFocus', 'onBlur', 'onClick']);
+const emit = defineEmits(['onFocus', 'onBlur', 'onChange']);
 const focus = ref(false);
 const inputValue = ref("");
 const suggestionLists = ref([]);
@@ -18,6 +18,7 @@ const showSuggestion = ref(0);
  */
 const setInputValue = (data) => {
   inputValue.value = data;
+  emit('onChange', inputValue);
 }
 
 const filterSuggestions = (e) => {

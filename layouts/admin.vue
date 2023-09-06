@@ -64,8 +64,9 @@ const menu = [
             },
             {
               icon: faCube,
-              label: "Menu 5.2",
-              path: "/5.2",
+              label: "Menu 5.2 (Login Layout 1)",
+              path: "/front/login-1",
+              resetPath: true
             },
           ]
         },
