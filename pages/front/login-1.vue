@@ -24,16 +24,16 @@ const onSubmitHandler = () => {
       <h2 class="text-4xl text-gray-600">Your Awesome <span class="font-semibold">Application</span></h2>
       <p class="text-lg lg:text-xl/4 py-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, rerum!</p>
     </div>
-    <div class="w-screen lg:w-[780px] bg-white rounded-2xl shadow-lg pt-8 pb-10 px-8">
+    <div class="container w-screen lg:w-[780px] bg-white rounded-2xl shadow-lg pt-8 pb-10 px-8">
       <div class="flex flex-wrap items-center px-2">
-        <div class="w-full lg:w-1/2">
+        <div class="w-full lg:w-1/2 pr-2">
           <h4 class="text-gray-700 text-lg font-medium tracking-wider pb-6">
             New <span class="font-semibold">Awesome Application</span> Built by <span class="font-semibold">Awesome Starter</span>
           </h4>
           <p class="mb-3 text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis numquam tempore error eveniet quisquam, repellendus, blanditiis accusamus corrupti non sapiente asperiores ducimus at quis quod aliquid obcaecati aspernatur id nam!</p>
           <a href="#" class="text-blue-600 font-medium text-lg">Read more..</a>
         </div>
-        <div class="w-full mt-6 lg:w-1/2">
+        <div class="w-full mt-6 lg:w-1/2 pl-2">
           <div class="flex flex-wrap">
             <h4 class="text-gray-700 text-xl font-semibold tracking-widest mb-6">Login to Your Account</h4>
             <form action="#" @submit.prevent="onSubmitHandler" class="flex flex-col w-full">

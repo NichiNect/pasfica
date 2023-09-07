@@ -40,10 +40,10 @@ const buttonVariant = {
   }
 }
 const buttonSize = {
-  lg: 'px-10 py-3 flex items-center gap-3',
-  md: 'px-8 py-2 flex items-center gap-2',
-  sm: 'px-8 pt-2 pb-2.5 text-xs flex items-center gap-2',
-  xs: 'px-6 pt-1 pb-1.5 text-xs flex items-center gap-1.5',
+  lg: 'px-10 py-3 flex items-center justify-center gap-3',
+  md: 'px-8 py-2 flex items-center justify-center gap-2',
+  sm: 'px-8 pt-2 pb-2.5 text-xs flex items-center justify-center gap-2',
+  xs: 'px-6 pt-1 pb-1.5 text-xs flex items-center justify-center gap-1.5',
   square: {
     lg: 'aspect-square w-[47px] flex items-center justify-center gap-3',
     md: 'aspect-square w-[40px] flex items-center justify-center gap-2',
