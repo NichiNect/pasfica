@@ -33,7 +33,13 @@ const modalSideHandler = () => {
 
 <template>
   <div class="container flex flex-wrap items-center mx-auto my-5 gap-5">
-    <button class="py-4 px-3 bg-primary hover:bg-opacity-70 text-white rounded" @click="modalDefaultHandler">Modal Default</button>
+    <BaseButton
+      label="Modal Default"
+      variant="solid"
+      color="primary"
+      size="md"
+      @onClick="modalDefaultHandler"
+    />
     <BaseModalDefault 
       :show="modalDefaultShow"
       @onClose="() => modalDefaultShow = false"
@@ -55,7 +61,13 @@ const modalSideHandler = () => {
       </template>
     </BaseModalDefault>
 
-    <button class="py-4 px-3 bg-primary hover:bg-opacity-70 text-white rounded" @click="modalConfirmHandler">Modal Confirm</button>
+    <BaseButton
+      label="Modal Confirm"
+      variant="solid"
+      color="primary"
+      size="md"
+      @onClick="modalConfirmHandler"
+    />
     <BaseModalConfirm 
       :show="modalConfirmShow"
       :noAction="false"
@@ -69,7 +81,13 @@ const modalSideHandler = () => {
       </template>
     </BaseModalConfirm>
 
-    <button class="py-4 px-3 bg-primary hover:bg-opacity-70 text-white rounded" @click="modalSideHandler">Modal Side</button>
+    <BaseButton
+      label="Modal Side"
+      variant="solid"
+      color="primary"
+      size="md"
+      @onClick="modalSideHandler"
+    />
     <BaseModalSide
       :show="modalSideShow"
       width="40%"

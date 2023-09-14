@@ -14,7 +14,7 @@ module.exports = {
         secondary: '#2dd4bf',
         lightSecondary: '#99f6e4',
         danger: '#ef4444',
-        lightRed: '#fca5a5',
+        lightDanger: '#fca5a5',
         success: '#84cc16',
         lightSuccess: '#bef264',
         disable: '#c4c3c3',
