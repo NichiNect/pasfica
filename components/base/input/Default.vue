@@ -3,9 +3,10 @@
  * * Variables
  */
 const props = defineProps([
-  'type', 'placeholder', 'inputValue', 'name', 'label', 'icon', 'iconPosition', 'disabled', 'suggestionLists'
+  'type', 'placeholder', 'inputValue', 'name', 'label', 'icon', 'iconPosition', 'disabled', 'suggestionLists', 'validations'
 ]);
 const emit = defineEmits(['onFocus', 'onBlur', 'onChange']);
+const invalid = ref(null);
 const focus = ref(false);
 const inputValue = ref("");
 const suggestionLists = ref([]);
@@ -96,16 +97,30 @@ onBeforeMount(() => {
   }
 });
 
+watch(inputValue, () => {
+
+  if (props.validations) {
+   
+    const validator = useValidator(props.validations, inputValue.value);
+    
+    if (validator.length > 0) {
+      invalid.value = validator[0];
+    } else {
+      invalid.value = null;
+    }
+  }
+});
 </script>
 
 <template>
   <div :class="[
     'form_control',
-    disabled ? 'opacity-70' : ''
+    disabled ? 'opacity-70' : '',
   ]">
     <label :for="[props.name]" 
       :class="[
-        focus ? 'text-primary' : ''
+        (focus && !invalid) ? 'text-primary' : '',
+        invalid ? 'text-danger' : ''
       ]"
     >
       {{ props.label }}
@@ -114,12 +129,13 @@ onBeforeMount(() => {
     <div class="relative">
       <input 
         :type="props.type ? props.type : 'text'"
-        :value="inputValue"
+        v-model="inputValue"
         :placeholder="props.placeholder"
         :name="props.name"
         :id="props.id"
         :class="[
-          (props.iconPosition == 'right') ? 'pl-5 pr-14' : (props.icon) ? 'pl-16 pr-5' : 'pl-5 pr-5'
+          (props.iconPosition == 'right') ? 'pl-5 pr-14' : (props.icon) ? 'pl-16 pr-5' : 'pl-5 pr-5',
+          invalid ? 'invalid' : ''
         ]"
         @focus="(e) => {
           focus = true;
@@ -144,9 +160,10 @@ onBeforeMount(() => {
         v-if="props.icon" 
         :icon="props.icon" 
         :class="[
-          'absolute text-gray-400 text-xl top-1/2 -translate-y-1/2',
+          'absolute text-xl top-1/2 -translate-y-1/2',
           (props.iconPosition == 'right') ? 'right-1 mr-5' : 'left-1 ml-5',
-          focus ? 'text-primary' : ''
+          (focus && !invalid) ? 'text-primary' : '',
+          invalid ? 'text-danger' : 'text-gray-400'
         ]"
       />
     </div>
@@ -168,5 +185,11 @@ onBeforeMount(() => {
         </li>
       </ul>
     </div>
+
+    <!-- Validations -->
+    <div v-if="props.validations" class="text-sm font-base text-danger mt-1 ml-1">
+      {{ invalid }}
+    </div>
+
   </div>
 </template>

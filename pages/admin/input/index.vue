@@ -24,6 +24,7 @@ const remember = ref(false);
       placeholder="Fill your username.."
       iconPosition="left"
       :icon="faUser"
+      :validations="['required', 'min:6', 'max:10']"
     />
     <BaseInputDefault
       type="password"
