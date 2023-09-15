@@ -39,7 +39,7 @@ const sidebarSubMenuHandler = (menuItem, menuItemKey, menuGroupKey) => {
 <template>
   <div class="container mx-auto grid min-h-screen grid-cols-6 lg:grid-cols-9 gap-8">
     <div :class="isClose ? 'absolute scale-x-0 -translate-x-full py-4' : 'absolute z-10 top-24 scale-100 col-span-8 py-4 lg:relative lg:top-0 lg:col-span-2'">
-      <div class="flex flex-col h-full bg-white rounded-xl overflow-hidden shadow-2xl">
+      <div class="flex flex-col h-full bg-white rounded-xl overflow-hidden shadow-2xl lg:shadow">
         <div class="m-4 lg:px-6 py-4 flex justify-center lg:justify-start gap-8 bg-primary rounded-xl">
           <!-- <img src="/logo.png" alt="logo" class='w-20' /> -->
           <h1 class="text-xl font-bold text-white hidden lg:block">MY PROJECT</h1>

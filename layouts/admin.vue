@@ -47,6 +47,22 @@ const menu = [
         label: "Menu 4 (Button)",
         path: "/button",
       },
+      {
+        icon: faCube,
+        label: "Menu 5 (Other Components)",
+        submenu: [
+          {
+            icon: faCube,
+            label: "Menu 5.1 (Kanban Card)",
+            path: "/kanban",
+          },
+          {
+            icon: faCube,
+            label: "Menu 5.2",
+            path: "/5.2",
+          },
+        ]
+      },
     ],  
   },
     {
@@ -54,23 +70,23 @@ const menu = [
       submenu: [
         {
           icon: faCubes,
-          label: "Menu 5 (Layouts)",
+          label: "Menu 6 (Layouts)",
           submenu: [
             {
               icon: faCube,
-              label: "Menu 5.1 (Front Layout 1)",
+              label: "Menu 6.1 (Front Layout 1)",
               path: "/front/layout-1",
               resetPath: true
             },
             {
               icon: faCube,
-              label: "Menu 5.2 (Login Layout 1)",
+              label: "Menu 6.2 (Login Layout 1)",
               path: "/front/login-1",
               resetPath: true
             },
             {
               icon: faCube,
-              label: "Menu 5.2 (Login Layout 2)",
+              label: "Menu 6.2 (Login Layout 2)",
               path: "/front/login-2",
               resetPath: true
             },
@@ -78,17 +94,17 @@ const menu = [
         },
         {
           icon: faCubes,
-          label: "Menu 6 (Tables)",
+          label: "Menu 7 (Tables)",
           submenu: [
             {
               icon: faCube,
-              label: "Menu 6.1 (Table Default)",
+              label: "Menu 7.1 (Table Default)",
               path: "/tables/default",
             },
             {
               icon: faCube,
-              label: "Menu 6.2",
-              path: "/6.2",
+              label: "Menu 7.2",
+              path: "/7.2",
             },
           ]
         },
