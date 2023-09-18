@@ -92,7 +92,8 @@ textarea.form_control:focus-visible {
 	@apply border-primary;
 }
 
-.form_control input.invalid {
+.form_control input.invalid,
+textarea.form_control.invalid {
 	@apply border-danger;
 }
 

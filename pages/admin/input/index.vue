@@ -53,6 +53,7 @@ const remember = ref(false);
       iconPosition="left"
       :icon="faPhoneAlt"
       useFormat="62"
+      :validations="['min:10']"
     />
     <BaseInputNumber 
       name="counter"
@@ -108,6 +109,7 @@ const remember = ref(false);
       name="note"
       label="Note"
       placeholder="Fill note.."
+      :validations="['min:6']"
     />
     <BaseInputImage
       name="avatar"

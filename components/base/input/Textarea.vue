@@ -3,11 +3,12 @@
  * * Variables
  */
  const props = defineProps([
-  'placeholder', 'inputValue', 'name', 'label', 'disabled', 'useFormat',
+  'placeholder', 'inputValue', 'name', 'label', 'disabled', 'validations',
 ]);
 const emit = defineEmits(['onFocus', 'onBlur', 'onChange']);
 
 const focus = ref(false);
+const invalid = ref(null);
 const inputValue = ref('');
 
 /**
@@ -41,6 +42,21 @@ onMounted(() => {
   }
 });
 
+watch(inputValue, () => {
+
+  if (props.validations) {
+   
+    const validator = useValidator(props.validations, inputValue.value);
+    
+    if (validator.length > 0) {
+      invalid.value = validator[0];
+    } else {
+      invalid.value = null;
+    }
+  }
+
+  emit('onChange', inputValue);
+});
 </script>
 
 <template>
@@ -49,7 +65,8 @@ onMounted(() => {
     :for="props.name"
     :class="[
       'font-medium-block mb-2',
-      focus ? 'text-primary' : ''
+      (focus && !invalid) ? 'text-primary' : '',
+      invalid ? 'text-danger' : ''
     ]"
     >
       {{ props.label }}
@@ -59,13 +76,22 @@ onMounted(() => {
       <textarea 
           :id="props.name" 
           :name="props.name"
+          v-model="inputValue"
           :placeholder="props.placeholder"
           :disabled="props.disabled ? true : false"
-          class="form_control h-[120px] rounded-lg text-lg focus:outline-none transition duration-150 p-4 border border-gray-300"
+          :class="[
+            'form_control h-[120px] rounded-lg text-lg focus:outline-none transition duration-150 p-4 border border-gray-300',
+            invalid ? 'invalid' : ''
+          ]"
           @focus="onFocusHandler"
           @blur="onBlurHandler"
           @input="onInputChangeHandler"
-        >{{ inputValue }}</textarea>
+        ></textarea>
+
+        <!-- Validations -->
+        <div v-if="props.validations" class="text-sm font-base text-danger mt-1 ml-1">
+          {{ invalid }}
+        </div>
     </div>
   </div>
 </template>
