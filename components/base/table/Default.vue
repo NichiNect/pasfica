@@ -4,61 +4,27 @@ import { faEye, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 /**
  * * Variables
  */
-const props = defineProps(['withoutSearch', 'actions']);
-const emit = defineEmits(["onClose"]);
+const props = defineProps(['withoutSearch', 'actions', 'data']);
+const emit = defineEmits(["onClose", "onDetail", "onDelete"]);
 
 const modalDetailShow = ref(false);
 const modalDeleteShow = ref(false);
 const rowActive = ref(null);
 
-const dataTable = reactive({
-  dataColumns: [
-    {
-      name: 'Nama',
-      value: 'name'
-    },
-    {
-      name: 'id',
-      value: 'id'
-    },
-    {
-      name: 'Umur',
-      value: (row) => {
-        return row?.age + ' tahun'
-      }
-    },
-  ],
-  dataRows: [
-    {
-      id: 1,
-      name: "Agito",
-      age: 20
-    },
-    {
-      id: 2,
-      name: "Ryuki",
-      age: 19
-    },
-    {
-      id: 3,
-      name: "Blade",
-      age: 17
-    }
-  ]
-});
+const dataTable = ref({});
 
 /**
  * * Methods
  */
 const modalDetailHandler = (row) => {
   modalDetailShow.value = !modalDetailShow.value;
-  console.log(row);
 
   if (modalDetailShow.value == true) {
     rowActive.value = row?.id;
   }
 
   // do something..
+  emit('onDetail', row);
 }
 
 const modalDeleteHandler = (row) => {
@@ -70,9 +36,10 @@ const modalDeleteHandler = (row) => {
 }
 
 const confirmDelete = () => {
-  console.log('confirm clicked', rowActive.value);
+  // console.log('confirm clicked', rowActive.value);
 
   // do something..
+  emit('onDelete', rowActive.value);
 
   rowActive.value = null;
   modalDeleteShow.value = false;
@@ -81,6 +48,13 @@ const confirmDelete = () => {
 /**
  * * Hooks & Watcher
  */
+onMounted(() => {
+  
+  if (props.data) {
+    dataTable.value = props.data;
+  }
+});
+
 watch([modalDeleteShow, modalDetailShow], (newValue, oldValue) => {
   // console.log('new', {
   //   delete: newValue[0],
@@ -147,9 +121,10 @@ watch([modalDeleteShow, modalDetailShow], (newValue, oldValue) => {
               v-for="(row, indexRow) in dataTable?.dataRows" :key="indexRow" :dataId="row?.id"
             >
               <td>{{ indexRow + 1 }}</td>
-              <td v-for="(column, indexColumn) in dataTable?.dataColumns" :key="indexColumn">
+              <td v-for="(column, indexColumn) in dataTable?.dataColumns" :key="indexColumn" class="">
                 <span v-if="typeof column['value'] == 'function'">
-                  {{ column['value'](row) }}
+                  <!-- {{ column['value'](row) }} -->
+                  <div v-html="column['value'](row)"></div>
                 </span>
                 <span v-else>
                   {{ row[column['value']] }}
@@ -157,13 +132,13 @@ watch([modalDeleteShow, modalDetailShow], (newValue, oldValue) => {
               </td>
               <td 
                 v-if="Array.isArray(props?.actions) && props?.actions?.length > 0"
-                class="inline-flex items-center gap-2"
+                class="flex items-center justify-center gap-2"
               >
                 <div v-if="props?.actions?.includes('detail')">
                   <BaseButton
-                    variant="light"
+                    variant="squareIcon"
                     color="secondary"
-                    size="xs"
+                    size="sm"
                     @onClick="modalDetailHandler(row)"
                   >
                     <FontAwesomeIcon :icon="faEye" />
@@ -192,9 +167,9 @@ watch([modalDeleteShow, modalDetailShow], (newValue, oldValue) => {
                 </div>
                 <div v-if="props?.actions?.includes('delete')">
                   <BaseButton
-                    variant="light"
+                    variant="squareIcon"
                     color="danger"
-                    size="xs"
+                    size="sm"
                     @onClick="modalDeleteHandler(row)"
                   >
                     <FontAwesomeIcon :icon="faTrash" />

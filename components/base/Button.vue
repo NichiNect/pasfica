@@ -36,7 +36,9 @@ const buttonVariant = {
     success: 'bg-lightSuccess text-success shadow border',
   },
   squareIcon: {
-    primary: 'bg-primary text-white shadow border'
+    primary: 'bg-primary text-white shadow border',
+    secondary: 'bg-secondary text-white shadow border',
+    danger: 'bg-danger text-white shadow border',
   }
 }
 const buttonSize = {
@@ -47,7 +49,7 @@ const buttonSize = {
   square: {
     lg: 'aspect-square w-[47px] flex items-center justify-center gap-3',
     md: 'aspect-square w-[40px] flex items-center justify-center gap-2',
-    sm: 'aspect-square w-[35px] text-xs flex items-center justify-center gap-2',
+    sm: 'aspect-square w-[35px] flex items-center justify-center gap-2',
     xs: 'aspect-square w-[20px] text-xs flex items-center justify-center gap-1.5',
   }
 }
