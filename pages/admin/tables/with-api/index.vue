@@ -1,7 +1,8 @@
 <script setup>
-import { faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const { $apiFetcher } = useNuxtApp();
+const router = useRouter();
 
 /**
  * * Layouts
@@ -144,6 +145,11 @@ const onDeleteClickedHandler = async (data) => {
   await getData();
 }
 
+const onEditClickedHandler = (data) => {
+  router.push({ path: `/admin/tables/with-api/update/${data?.id}` });
+  // navigateTo(`/admin/tables/with-api/update/${data?.id}`);
+}
+
 /**
  * * Hooks & Watchers
  */
@@ -171,23 +177,26 @@ await getData();
     <BaseTableDefault
       :data="tableData"
       :actions="[
-        'detail', 'delete'
+        'detail', 'edit', 'delete'
       ]"
       :actionDetailUrl="$apiFetcher.customProduct.findOne"
       :actionDeleteUrl="$apiFetcher.customProduct.delete"
       @onDetail="(data) => console.log('detail', data)"
       @onDelete="onDeleteClickedHandler"
+      @onEdit="onEditClickedHandler"
       @onSearchChange="onSearchChangeHandler"
     >
       <template #topLeftElement>
         <div>
-          <BaseButton
-            color="primary"
-            size="md"
-          >
-            <FontAwesomeIcon :icon="faPlus" class="mr-1" />
-            Add Data
-          </BaseButton>
+          <NuxtLink to="/admin/tables/with-api/create">
+            <BaseButton
+              color="primary"
+              size="md"
+            >
+              <FontAwesomeIcon :icon="faPlus" class="mr-1" />
+              Add Data
+            </BaseButton>
+          </NuxtLink>
         </div>
       </template>
 

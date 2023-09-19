@@ -61,7 +61,6 @@ const remember = ref(false);
       placeholder="Fill your amount number.."
       iconPosition="right"
       :icon="faSortAmountAsc"
-      useFormat="62"
       minValue="0"
       maxValue="10"
     />

@@ -9,6 +9,12 @@ const productRepository = {
   findOne(id, options = {}) {
     return repository('GET', `${resourceUrl}/${id}`, options, 'custom');
   },
+  create(options = {}) {
+    return repository('POST', `${resourceUrl}`, options, 'custom');
+  },
+  update(id, options = {}) {
+    return repository('PATCH', `${resourceUrl}/${id}`, options, 'custom');
+  },
   delete(id, options = {}) {
     return repository('DELETE', `${resourceUrl}/${id}`, options, 'custom');
   }

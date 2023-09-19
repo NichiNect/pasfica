@@ -1,11 +1,11 @@
 <script setup>
-import { faEye, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEye, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * * Variables
  */
 const props = defineProps(['withoutSearch', 'actions', 'data', 'actionDetailUrl', 'actionDeleteUrl']);
-const emit = defineEmits(["onClose", "onDetail", "onDelete", "onSearchChange"]);
+const emit = defineEmits(["onClose", "onDetail", "onEdit", "onDelete", "onSearchChange"]);
 
 const modalDetailShow = ref(false);
 const modalDeleteShow = ref(false);
@@ -77,6 +77,10 @@ const confirmDelete = async () => {
 
   rowActive.value = null;
   modalDeleteShow.value = false;
+}
+
+const editHandler = (row) => {
+  emit('onEdit', row);
 }
 
 /**
@@ -188,6 +192,16 @@ watch(searchInput, () => {
                     @onClick="modalDetailHandler(row)"
                   >
                     <FontAwesomeIcon :icon="faEye" />
+                  </BaseButton>
+                </div>
+                <div v-if="props?.actions?.includes('edit')">
+                  <BaseButton
+                    variant="squareIcon"
+                    color="success"
+                    size="sm"
+                    @onClick="editHandler(row)"
+                  >
+                    <FontAwesomeIcon :icon="faEdit" />
                   </BaseButton>
                 </div>
                 <div v-if="props?.actions?.includes('delete')">

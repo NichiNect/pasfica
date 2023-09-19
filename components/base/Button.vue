@@ -39,6 +39,7 @@ const buttonVariant = {
     primary: 'bg-primary text-white shadow border',
     secondary: 'bg-secondary text-white shadow border',
     danger: 'bg-danger text-white shadow border',
+    success: 'bg-success text-white shadow border',
   }
 }
 const buttonSize = {

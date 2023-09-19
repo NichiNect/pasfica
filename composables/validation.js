@@ -53,6 +53,7 @@ const numeric = (value) => {
 
   if (typeof value == 'string') {
 
+    console.log(typeof parseInt(value));
     if (typeof parseInt(value) != 'number') {
 
       return validationMessages.numeric;
