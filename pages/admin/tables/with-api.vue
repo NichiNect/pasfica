@@ -13,7 +13,10 @@ definePageMeta({
 /**
  * * Variables
  */
-const isLoading = ref(false);
+const isLoading = ref({
+  list: false,
+  detail: false
+});
 const paginateData = ref({
   total: 100,
   paginateRow: 10,
@@ -27,12 +30,15 @@ const queryParams = ref({});
  */
 const getData = async (params) => {
 
-  isLoading.value = true;
+  isLoading.value.list = true;
 
   try {
 
     const { data } = await $apiFetcher.customProduct.findAll({
-      query: params?.query,
+      query: {
+        ...params?.query,
+        // limit: 10
+      },
       onResponse({request, response, options}) {
         // console.log('status', response.status);
       }
@@ -43,11 +49,36 @@ const getData = async (params) => {
 
   } catch (error) {
   } finally {
-    isLoading.value = false;
+    isLoading.value.list = false;
   }
 
   return;
 }
+
+// const getDetail = async (id, params = null) => {
+
+//   setTimeout(() => {
+//     isLoading.value.detail = true;
+//   }, 150);
+
+//   try {
+
+//     const { data } = await $apiFetcher.customProduct.findOne(id, {
+//       query: params?.query,
+//       onResponse({request, response, options}) {
+//         // console.log('status', response.status);
+//       }
+//     });
+
+//     detailData.value = data.value;
+
+//   } catch (error) {
+//   } finally {
+//     isLoading.value.detail = false;
+//   }
+
+//   return;
+// }
 
 /**
  * * Method Parser
@@ -108,6 +139,11 @@ const onSearchChangeHandler = async (data) => {
   });
 }
 
+const onDeleteClickedHandler = async (data) => {
+  console.log('delete', data);
+  await getData();
+}
+
 /**
  * * Hooks & Watchers
  */
@@ -129,16 +165,18 @@ await getData();
 
   <hr class="mt-5 mb-3">
 
-  <BaseLoading v-if="isLoading" class="p-20" />
+  <BaseLoading v-if="isLoading.list" class="p-20" />
 
-  <div v-else>
+  <div v-if="!isLoading.list">
     <BaseTableDefault
       :data="tableData"
       :actions="[
         'detail', 'delete'
       ]"
+      :actionDetailUrl="$apiFetcher.customProduct.findOne"
+      :actionDeleteUrl="$apiFetcher.customProduct.delete"
       @onDetail="(data) => console.log('detail', data)"
-      @onDelete="(data) => console.log('delete', data)"
+      @onDelete="onDeleteClickedHandler"
       @onSearchChange="onSearchChangeHandler"
     >
       <template #topLeftElement>

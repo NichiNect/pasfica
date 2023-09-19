@@ -4,19 +4,21 @@ import { faEye, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 /**
  * * Variables
  */
-const props = defineProps(['withoutSearch', 'actions', 'data']);
+const props = defineProps(['withoutSearch', 'actions', 'data', 'actionDetailUrl', 'actionDeleteUrl']);
 const emit = defineEmits(["onClose", "onDetail", "onDelete", "onSearchChange"]);
 
 const modalDetailShow = ref(false);
 const modalDeleteShow = ref(false);
 const rowActive = ref(null);
+const isLoading = ref(false);
 
 const dataTable = ref({});
+const singleData = ref({});
 const searchInput = ref('');
 /**
  * * Methods
  */
-const modalDetailHandler = (row) => {
+const modalDetailHandler = async (row) => {
   modalDetailShow.value = !modalDetailShow.value;
 
   if (modalDetailShow.value == true) {
@@ -25,6 +27,18 @@ const modalDetailHandler = (row) => {
 
   // do something..
   emit('onDetail', row);
+
+  isLoading.value = true;
+
+  try {
+
+    const { data } = await props.actionDetailUrl(row?.id);
+
+    singleData.value = data.value;
+  } catch (error) {
+  } finally {
+    isLoading.value = false;
+  }
 }
 
 const modalDeleteHandler = (row) => {
@@ -35,11 +49,31 @@ const modalDeleteHandler = (row) => {
   }
 }
 
-const confirmDelete = () => {
-  // console.log('confirm clicked', rowActive.value);
+const confirmDelete = async () => {
 
   // do something..
   emit('onDelete', rowActive.value);
+
+  isLoading.value = true;
+
+  try {
+
+    const { data } = await props.actionDeleteUrl(rowActive.value, {
+      onResponse({request, response, options}) {
+        if (response.status == 200) {
+          // success
+          alert('Success delete data');
+        } else {
+          // failed
+          alert('Failed delete data');
+        }
+      }
+    });
+
+  } catch (error) {
+  } finally {
+    isLoading.value = false;
+  }
 
   rowActive.value = null;
   modalDeleteShow.value = false;
@@ -189,18 +223,45 @@ watch(searchInput, () => {
     @onClose="() => modalDetailShow = false"
   >
     <template #title>
-        <h6 class='text-xl font-semibold text-gray-600'>Title Modal Side</h6>
-        <p class='text-md text-gray-400 leading-4 mt-1'>Lorem ipsum dolor sit amet consectetur.</p>
+        <h6 class='text-xl font-semibold text-gray-600'>Detail Product</h6>
+        <p v-if="!isLoading" class='text-md text-gray-400 leading-4 mt-1'>{{ singleData.title }}</p>
       </template>
 
       <template #content>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, expedita cumque. Enim rerum quidem odit. Minus, cumque quidem vitae dolores iusto corporis sed nihil facilis reprehenderit, eos voluptate perspiciatis accusamus?</p>
+        <BaseLoading v-if="isLoading" class="py-16" />
+
+        <div v-if="!isLoading" class="grid grid-cols-3 gap-4 mt-8">
+          <p class="text-xl font-semibold mr-4 ">Title: </p>
+          <p class="col-span-2 text-md font-base">{{ singleData.title }}</p>
+
+          <p class="text-xl font-semibold mr-4 ">Category: </p>
+          <p class="col-span-2 text-md font-base">{{ singleData.category }}</p>
+          
+          <p class="text-xl font-semibold mr-4 ">Description: </p>
+          <p class="col-span-2 text-md font-base">{{ singleData.description }}</p>
+
+          <p class="text-xl font-semibold mr-4 ">Price: </p>
+          <p class="col-span-2 text-md font-base">${{ singleData.price }}</p>
+
+          <p class="text-xl font-semibold mr-4 ">Rating: </p>
+          <div class="col-span-2 text-md font-base">
+            <div class="flex flex-col">
+              <p>Total: {{ singleData.rating?.count }}</p>
+              <p>Rate: {{ singleData.rating?.rate }}</p>
+            </div>
+          </div>
+
+          <p class="text-xl font-semibold mr-4 ">Picture: </p>
+          <p class="col-span-2 w-[70%] mt-4">
+            <img :src="singleData.image" :alt="singleData.title" class="object-fill">
+          </p>
+        </div>
       </template>
 
       <template #footer>
         <div class='flex justify-end gap-4'>
-          <button class="py-2 px-3 bg-danger hover:opacity-70 text-white rounded">No</button>
-          <button class="py-2 px-3 bg-primary hover:opacity-70 text-white rounded">Yes</button>
+          <!-- <button class="py-2 px-3 bg-danger hover:opacity-70 text-white rounded">No</button> -->
+          <button @click="() => modalDetailShow = false" class="py-2 px-3 bg-primary hover:opacity-70 text-white rounded">Close</button>
         </div>
       </template>
   </BaseModalSide>
