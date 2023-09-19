@@ -24,7 +24,7 @@ const onSubmitHandler = () => {
       <h2 class="text-4xl text-gray-600">Your Awesome <span class="font-semibold">Application</span></h2>
       <p class="text-lg lg:text-xl/4 py-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, rerum!</p>
     </div>
-    <div class="container w-screen lg:w-[780px] bg-white rounded-2xl shadow-lg pt-8 pb-10 px-8">
+    <div class="container w-5/6 lg:w-[780px] bg-white rounded-2xl shadow-lg pt-8 pb-10 px-8">
       <div class="flex flex-wrap items-center px-2">
         <div class="w-full lg:w-1/2 pr-2">
           <h4 class="text-gray-700 text-lg font-medium tracking-wider pb-6">
@@ -59,7 +59,7 @@ const onSubmitHandler = () => {
                 <BaseButton
                   color="primary"
                   variant="outline"
-                  size="lg"
+                  size="md"
                   class="px-20 lg:px-12"
                 >
                   <FontAwesomeIcon :icon="faSignIn" class="mr-3" />
@@ -69,7 +69,7 @@ const onSubmitHandler = () => {
                 <BaseButton
                   type="submit"
                   color="primary"
-                  size="lg"
+                  size="md"
                   class="px-20 lg:px-14"
                 >
                   <FontAwesomeIcon :icon="faSignIn" class="mr-3" />
