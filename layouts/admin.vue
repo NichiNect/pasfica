@@ -103,8 +103,8 @@ const menu = [
             },
             {
               icon: faCube,
-              label: "Menu 7.2",
-              path: "/7.2",
+              label: "Menu 7.2 (Table with API)",
+              path: "/tables/with-api",
             },
           ]
         },

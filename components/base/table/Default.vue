@@ -5,14 +5,14 @@ import { faEye, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
  * * Variables
  */
 const props = defineProps(['withoutSearch', 'actions', 'data']);
-const emit = defineEmits(["onClose", "onDetail", "onDelete"]);
+const emit = defineEmits(["onClose", "onDetail", "onDelete", "onSearchChange"]);
 
 const modalDetailShow = ref(false);
 const modalDeleteShow = ref(false);
 const rowActive = ref(null);
 
 const dataTable = ref({});
-
+const searchInput = ref('');
 /**
  * * Methods
  */
@@ -79,6 +79,17 @@ watch([modalDeleteShow, modalDetailShow], (newValue, oldValue) => {
     }
   }
 });
+
+watch(searchInput, () => {
+
+  const delaySearch = setTimeout(() => {
+    emit('onSearchChange', searchInput);
+  }, 1500);
+
+  return () => {
+    clearTimeout(delaySearch);
+  }
+});
 </script>
 
 <template>
@@ -97,13 +108,14 @@ watch([modalDeleteShow, modalDetailShow], (newValue, oldValue) => {
               placeholder="Search.."
               iconPosition="right"
               :icon="faSearch"
+              @onChange="(e) => searchInput = e.value"
             />
           </div>
         </div>
       </div>
     </div>
 
-    <div class="overflow-auto my-2">
+    <div class="overflow-auto scroll_control my-2">
       <div v-if="dataTable?.dataColumns">
         <table class="table">
           <thead>
@@ -143,27 +155,6 @@ watch([modalDeleteShow, modalDetailShow], (newValue, oldValue) => {
                   >
                     <FontAwesomeIcon :icon="faEye" />
                   </BaseButton>
-                  <BaseModalSide
-                    :show="modalDetailShow"
-                    width="40%"
-                    @onClose="() => modalDetailShow = false"
-                  >
-                    <template #title>
-                        <h6 class='text-xl font-semibold text-gray-600'>Title Modal Side</h6>
-                        <p class='text-md text-gray-400 leading-4 mt-1'>Lorem ipsum dolor sit amet consectetur.</p>
-                      </template>
-    
-                      <template #content>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, expedita cumque. Enim rerum quidem odit. Minus, cumque quidem vitae dolores iusto corporis sed nihil facilis reprehenderit, eos voluptate perspiciatis accusamus?</p>
-                      </template>
-    
-                      <template #footer>
-                        <div class='flex justify-end gap-4'>
-                          <button class="py-2 px-3 bg-danger hover:opacity-70 text-white rounded">No</button>
-                          <button class="py-2 px-3 bg-primary hover:opacity-70 text-white rounded">Yes</button>
-                        </div>
-                      </template>
-                  </BaseModalSide>
                 </div>
                 <div v-if="props?.actions?.includes('delete')">
                   <BaseButton
@@ -174,18 +165,6 @@ watch([modalDeleteShow, modalDetailShow], (newValue, oldValue) => {
                   >
                     <FontAwesomeIcon :icon="faTrash" />
                   </BaseButton>
-                  <BaseModalConfirm 
-                    :show="modalDeleteShow"
-                    :noAction="false"
-                    @onClose="() => modalDeleteShow = false"
-                    @onSubmit="confirmDelete"
-                  >
-                    <template #title>Are you sure to delete this data?</template>
-
-                    <!-- <template #content>
-                      <p class="text-center">Are you sure to delete this data?</p>
-                    </template> -->
-                  </BaseModalConfirm>
                 </div>
               </td>
             </tr>
@@ -202,4 +181,40 @@ watch([modalDeleteShow, modalDetailShow], (newValue, oldValue) => {
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+  <BaseModalSide
+    :show="modalDetailShow"
+    width="40%"
+    @onClose="() => modalDetailShow = false"
+  >
+    <template #title>
+        <h6 class='text-xl font-semibold text-gray-600'>Title Modal Side</h6>
+        <p class='text-md text-gray-400 leading-4 mt-1'>Lorem ipsum dolor sit amet consectetur.</p>
+      </template>
+
+      <template #content>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, expedita cumque. Enim rerum quidem odit. Minus, cumque quidem vitae dolores iusto corporis sed nihil facilis reprehenderit, eos voluptate perspiciatis accusamus?</p>
+      </template>
+
+      <template #footer>
+        <div class='flex justify-end gap-4'>
+          <button class="py-2 px-3 bg-danger hover:opacity-70 text-white rounded">No</button>
+          <button class="py-2 px-3 bg-primary hover:opacity-70 text-white rounded">Yes</button>
+        </div>
+      </template>
+  </BaseModalSide>
+
+  <BaseModalConfirm 
+    :show="modalDeleteShow"
+    :noAction="false"
+    @onClose="() => modalDeleteShow = false"
+    @onSubmit="confirmDelete"
+  >
+    <template #title>Are you sure to delete this data?</template>
+
+    <!-- <template #content>
+      <p class="text-center">Are you sure to delete this data?</p>
+    </template> -->
+  </BaseModalConfirm>
 </template>

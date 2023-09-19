@@ -31,7 +31,7 @@ watch(propsShow, (newValue) => {
 
     <div :class="[
       'fixed top-0',
-      show ? 'right-0' : '-right-[100%]',
+      props.show ? 'right-0' : '-right-[100%]',
       'h-screen bg-white z-50 rounded-l-3xl border-l-4 border-secondary shadow-[-4px_0px_10px_-4px_rgba(0,0,0,0.35)]'
     ]" :style="[
       props.width ? `width: ${props.width};` : 'width: 30%;'
