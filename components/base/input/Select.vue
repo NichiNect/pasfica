@@ -5,7 +5,7 @@ import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
  * * Variables
  */
 const props = defineProps([
-  'placeholder', 'inputValue', 'name', 'label', 'options', 'icon', 'iconPosition', 'disabled', 'loading', 'searchable', 'size'
+  'placeholder', 'inputValue', 'name', 'label', 'options', 'icon', 'iconPosition', 'disabled', 'loading', 'searchable', 'size', 'serverSideControl'
 ]);
 const emit = defineEmits(['onFocus', 'onChange']);
 const inputValue = ref({});
@@ -52,7 +52,7 @@ const inputOption = {
 /**
  * * Methods
  */
-const filterOption = (e) => {
+const filterOption = async (e) => {
 
   if (options.value && options.value.length > 0) {
 
@@ -60,17 +60,39 @@ const filterOption = (e) => {
 
     if (props.searchable || props.searchable != null) {
 
-      if (e.target.value) {
+      // * is fetch server
+      if (props.serverSideControl || props.serverSideControl?.apiUrl) {
 
-        filtered = options.value
-          .filter((item) => {
-            return item.label.toLowerCase()
-              .indexOf(e.target.value.toLowerCase()) > -1;
-          });
+        if (e.target.value) {
+
+          let debounceTimer;
+          clearTimeout(debounceTimer);
+
+          debounceTimer = setTimeout( async () => {
+
+            const resultData = await serverSideFetchOptions(e.target.value.toLowerCase());
+            filteredOptions.value = resultData;
+          }, 1000);
+        } else {
+
+          filtered = options.value;
+        }
+        
       } else {
 
-        filtered = options.value.slice(0, 10);
+        if (e.target.value) {
+  
+          filtered = options.value
+            .filter((item) => {
+              return item.label.toLowerCase()
+                .indexOf(e.target.value.toLowerCase()) > -1;
+            });
+        } else {
+  
+          filtered = options.value.slice(0, 10);
+        }
       }
+
     } else {
 
       filtered = options.value;
@@ -79,6 +101,49 @@ const filterOption = (e) => {
     activeOption.value = -1;
     filteredOptions.value = filtered;
     showOption.value = true;
+  }
+}
+
+const serverSideFetchOptions = async (querySearch = null) => {
+
+  isLoading.value = true;
+  try {
+
+    const result = await useFetch(props.serverSideControl?.apiUrl, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      onResponse({ request, response }) {
+        // console.log('res', response);
+      },
+      method: 'GET',
+      params: {
+        [props.serverSideControl?.searchQueryKey]: querySearch
+      }
+    })
+
+    options.value = result.data.value;
+
+    return result.data.value;
+  } catch(err) {
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+const onFocusHandler = async (e) => {
+
+  focus.value = true;
+  showOption.value = true;
+  emit('onFocus', e);
+
+  await serverSideFetchOptions();
+    
+  if (options.value.length > 0) {
+    filterOption(e);
+  }
+  if (props.searchable) {
+    e.target.select();
   }
 }
 
@@ -140,10 +205,38 @@ const optionMouseUpHandler = (optionItem, idx) => {
 /**
  * * Hooks & Watcher
  */
-onBeforeMount(() => {
+onBeforeMount( async () => {
 
-  if (props.options) {
-    options.value = props.options;
+  if (props.serverSideControl || props.serverSideControl?.apiUrl) {
+
+    // isLoading.value = true;
+    // try {
+
+    //   console.log('ontrycatch');
+
+    //   const result = await useLazyAsyncData('optionsData', () => useFetch(props.serverSideControl?.apiUrl, {
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     onResponse({ request, response }) {
+    //       // console.log('res', response);
+    //     },
+    //     method: 'GET'
+    //   }));
+
+    //   console.log('apifetch', result.data.value.data);
+
+    //   options.value = result.data.value.data;
+    // } catch(err) {
+    // } finally {
+    //   isLoading.value = false;
+    // }
+
+  } else {
+
+    if (props.options) {
+      options.value = props.options;
+    }
   }
 });
 
@@ -185,19 +278,8 @@ watch(inputValue, () => {
         :placeholder="props.placeholder"
         :id="`${props.name}_select`"
         :value="inputShownValue"
-        @focus="(e) => {
-          focus = true;
-          showOption = true;
-          emit('onFocus', e);
-
-          if (options.length > 0) {
-            filterOption(e);
-          }
-          if (props.searchable) {
-            e.target.select();
-          }
-        }"
-        @blur="onBlurHandler(e)"
+        @focus="onFocusHandler"
+        @blur="onBlurHandler"
         @keyup="onKeyUpHandler"
       />
 
@@ -214,7 +296,7 @@ watch(inputValue, () => {
       <label 
         class="absolute mr-5 right-1 text-gray-400 top-1/2 -translate-y-1/2"
         @click="() => {
-          focus = (!props.disabled ? !focus : flase);
+          focus = (!props.disabled ? !focus : false);
         }"
       >
         <FontAwesomeIcon 
@@ -234,13 +316,22 @@ watch(inputValue, () => {
     <div v-if="showOption">
       <ul
         :class="[
-          'scroll-control',
+          'scroll_control',
           inputOptionContainer[props.size || 'md'],
           focus ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0',
           'absolute left-0 mt-2 w-full bg-slate-50 shadow text-left z-30 overflow-hidden ease-in-out max-h-[200px] overflow-y-auto'
         ]
       ">
         <li 
+          v-if="isLoading"
+          :class="[
+            'bg-lightPrimary text-primary px-2'
+          ]"
+        >
+          <BaseLoading class="py-2 text-xs" />
+        </li>
+        <li 
+          v-else
           v-for="(item, idx) in filteredOptions"
           :class="[
             'cursor-pointer hover:bg-lightPrimary',
@@ -265,7 +356,7 @@ watch(inputValue, () => {
             keyDown = false;
           }"
         >
-        {{ item.label }}
+          {{ item.label }}
         </li>
       </ul>
 

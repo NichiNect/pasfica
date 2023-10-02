@@ -191,5 +191,16 @@ const remember = ref(false);
         console.log('valdata', data);
       }"
     />
+
+    <BaseInputSelect
+      name="category"
+      label="Category Product"
+      placeholder="Choose one.."
+      :searchable="true"
+      :serverSideControl="{
+        apiUrl: 'http://localhost:3000/api/picklist/categories',
+        searchQueryKey: 'search',
+      }"
+    />
   </div>
 </template>
