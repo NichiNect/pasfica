@@ -119,7 +119,8 @@ const serverSideFetchOptions = async (querySearch = null) => {
       method: 'GET',
       params: {
         [props.serverSideControl?.searchQueryKey]: querySearch
-      }
+      },
+      watch: false
     })
 
     options.value = result.data.value;

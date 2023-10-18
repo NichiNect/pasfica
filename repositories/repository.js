@@ -6,6 +6,7 @@ const useApiFetch = (method, url, options = {}, mode = 'standard') => {
     ...options,
     method,
     baseURL: runtimeConfig.public.apiBase,
+    watch: false
   };
 
   if (mode == 'custom') {
