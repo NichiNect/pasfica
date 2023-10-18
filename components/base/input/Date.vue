@@ -20,7 +20,7 @@ const dateRef = ref(new Date());
  */
 const changeDate = (e) => {
   // inputValue.value = moment(e.date).format(formatDate.value);
-  inputValue.value = moment(dateRef.value).format(formatDate.value);
+  inputValue.value = moment(dateRef.value).locale('id').format(formatDate.value);
   emit('onChange', inputValue.value);
 }
 
@@ -49,6 +49,10 @@ onMounted(() => {
     formatDate.value = props.useFormat;
   } else {
     formatDate.value = "DD-MM-YYYY";
+  }
+
+  if (props.inputValue) {
+    inputValue.value = moment(props.inputValue).locale('id').format(formatDate.value);
   }
 });
 </script>
@@ -79,7 +83,7 @@ onMounted(() => {
         ]"
         :name="props.name"
         :id="props.name"
-        :disabled="props.disabled ? true: false"
+        :disabled="props.disabled"
         autocomplete="off"
         @focus="onFocusHandler"
         @blur="onBlurHandler"

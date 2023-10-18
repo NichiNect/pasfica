@@ -20,6 +20,7 @@ const paginateData = ref({
  * * Methods
  */
 const paginateChangeHandler = () => {
+
   if (props.total > props.paginateRow) {
 
     let showPages = [];
@@ -52,6 +53,14 @@ const paginateChangeHandler = () => {
       pages: showPages,
       isLast: props.pageActive + 1 < totalPage && totalPage > 3,
       totalPage: totalPage
+    }
+  } else {
+
+    paginateData.value = {
+      isFirst: false,
+      pages: [1],
+      isLast: false,
+      totalPage: 1
     }
   }
 }

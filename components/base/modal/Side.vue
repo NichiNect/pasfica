@@ -29,13 +29,16 @@ watch(propsShow, (newValue) => {
     @click="emit('onClose')">
     </div>
 
-    <div :class="[
-      'fixed top-0',
-      props.show ? 'right-0' : '-right-[100%]',
-      'h-screen bg-white z-50 rounded-l-3xl border-l-4 border-secondary shadow-[-4px_0px_10px_-4px_rgba(0,0,0,0.35)]'
-    ]" :style="[
-      props.width ? `width: ${props.width};` : 'width: 30%;'
-    ]">
+    <div 
+      :class="[
+        'fixed top-0',
+        props.show ? 'right-0' : '-right-[100%]',
+        'h-screen bg-white z-50 rounded-l-3xl border-l-4 border-secondary shadow-[-4px_0px_10px_-4px_rgba(0,0,0,0.35)]'
+      ]" 
+      :style="[
+        props.width ? `width: ${props.width};` : 'width: 30%;'
+      ]"
+    >
 
       <!-- Header/Title -->
       <div class="flex justify-between items-center gap-8 px-8 py-6">
@@ -52,13 +55,13 @@ watch(propsShow, (newValue) => {
 
       <!-- Body/Content -->
       <div class='px-8 max-h-[calc(100vh-75px)] overflow-y-auto scroll_control'>
-        <div class="min-h-[calc(100vh-75px)]">
+        <div class="min-h-[calc(100vh-75px)] mb-12">
           <slot name="content" />
         </div>
       </div>
 
       <!-- Footer -->
-      <div class="px-8 py-4 bg-background rounded-b-xl absolute bottom-0 w-full">
+      <div class="px-8 py-4 mt-12 bg-background rounded-b-xl absolute bottom-0 w-full">
         <slot name="footer" />
       </div>
     </div>
