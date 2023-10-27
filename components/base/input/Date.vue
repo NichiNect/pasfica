@@ -21,7 +21,7 @@ const dateRef = ref(new Date());
 const changeDate = (e) => {
   // inputValue.value = moment(e.date).format(formatDate.value);
   inputValue.value = moment(dateRef.value).locale('id').format(formatDate.value);
-  emit('onChange', inputValue.value);
+  emit('onChange', inputValue);
 }
 
 const onFocusHandler = () => {

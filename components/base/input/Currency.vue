@@ -5,7 +5,7 @@
 const props = defineProps([
   'placeholder', 'inputValue', 'name', 'label', 'icon', 'iconPosition', 'disabled', 'minValue', 'maxLength'
 ]);
-const emit = defineEmits(['onFocus', 'onBlur']);
+const emit = defineEmits(['onFocus', 'onBlur', 'onChange']);
 
 const focus = ref(false);
 const inputValue = ref('');
@@ -61,7 +61,8 @@ onBeforeMount(() => {
 
 watch(inputValue, (current, before) => {
 
-  console.log('va', inputValue.value);
+  // console.log('va', inputValue.value);
+  emit('onChange', inputValue);
 });
 </script>
 

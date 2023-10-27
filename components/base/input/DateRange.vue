@@ -27,7 +27,7 @@ const changeDate = (e) => {
     moment(dateRef.value.end).format(formatDate.value)
   ];
 
-  emit('onChange', input.value);
+  emit('onChange', inputValue);
 }
 
 const onFocusHandler = () => {
@@ -79,7 +79,7 @@ onMounted(() => {
         type="text"
         :value="
           (inputValue && inputValue.length > 0)
-          ? `${moment(inputValue[0], formatDate, true).format(formatDate)} - ${moment(inputValue[1], formatDate, true).format(formatDate)}`
+          ? `${moment(inputValue[0], formatDate, true).format(formatDate)} ~ ${moment(inputValue[1], formatDate, true).format(formatDate)}`
           : ''
         "
         :placeholder="props.placeholder"
