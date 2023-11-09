@@ -5,7 +5,8 @@ import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
  * * Variables
  */
 const props = defineProps([
-  'placeholder', 'inputValue', 'name', 'label', 'options', 'icon', 'iconPosition', 'disabled', 'loading', 'searchable', 'size', 'serverSideControl'
+  'placeholder', 'inputValue', 'name', 'label', 'options', 'icon', 'iconPosition', 'disabled', 'loading', 'searchable', 'size', 'serverSideControl',
+  'validations', 'errors'
 ]);
 const emit = defineEmits(['onFocus', 'onChange']);
 const inputValue = ref({});
@@ -13,6 +14,7 @@ const inputShownValue = ref("");
 const options = ref([]);
 const isLoading = ref(false);
 const focus = ref(false);
+const invalid = ref(null);
 const keyDown = ref(false);
 const activeOption = ref(0);
 const filteredOptions = ref([]);
@@ -232,6 +234,9 @@ onBeforeMount( async () => {
     // } finally {
     //   isLoading.value = false;
     // }
+    if (props.inputValue) {
+      await serverSideFetchOptions();
+    }
 
   } else {
 
@@ -239,9 +244,35 @@ onBeforeMount( async () => {
       options.value = props.options;
     }
   }
+
+  if (props.inputValue) {
+
+    const selected = options.value?.find((one) => {
+      return one.value == props.inputValue;
+    });
+
+    inputValue.value = selected?.value;
+    inputShownValue.value = selected?.label;
+  }
+
+  if (props.errors && props.errors?.length > 0) {
+    invalid.value = props.errors[0].message;
+  }
 });
 
 watch(inputValue, () => {
+
+  if (props.validations) {
+   
+    const validator = useValidator(props.validations, inputValue.value);
+
+    if (validator.length > 0) {
+      invalid.value = validator[0];
+    } else {
+      invalid.value = null;
+    }
+  }
+
   emit('onChange', reactive({
     label: inputShownValue.value,
     value: inputValue.value
@@ -250,11 +281,15 @@ watch(inputValue, () => {
 </script>
 
 <template>
-  <div class="form_control">
+  <div :class="[
+    'form_control',
+    props.disabled ? 'opacity-70' : ''
+  ]">
     <label v-if="props.label" :for="`${[props.name]}_select`" 
       :class="[
         'select-none',
-        focus ? 'text-primary' : ''
+        (focus && !invalid) ? 'text-primary' : '',
+        invalid ? 'text-danger' : ''
       ]">
       {{ props.label }}
     </label>
@@ -272,8 +307,10 @@ watch(inputValue, () => {
           inputField[props.size || 'md'],
           props.iconPosition 
             ? inputPadding[props.iconPosition][props.size || 'md'] 
-            : inputPadding['right'][props.size || 'md']
+            : inputPadding['right'][props.size || 'md'],
+          invalid ? 'invalid' : ''
         ]"
+        :disabled="props.disabled"
         autocomplete="off"
         :readonly="props.searchable ? false : true"
         :placeholder="props.placeholder"
@@ -304,7 +341,8 @@ watch(inputValue, () => {
           :class="[
             'text-xl -mt-2',
             (props.iconPosition == 'right') ? 'mr-8' : '',
-            focus ? 'text-primary' : '',
+            (focus && !invalid) ? 'text-primary' : '',
+            invalid ? 'text-danger' : ''
           ]"
           :icon="faChevronDown"
           @click="() => {
@@ -362,5 +400,11 @@ watch(inputValue, () => {
       </ul>
 
     </div>
+
+    <!-- Validations -->
+    <div v-if="props.validations || props.errors" class="text-sm font-base text-danger mt-1 ml-1">
+      {{ invalid }}
+    </div>
+
   </div>
 </template>

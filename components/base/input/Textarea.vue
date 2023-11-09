@@ -2,8 +2,8 @@
 /**
  * * Variables
  */
- const props = defineProps([
-  'placeholder', 'inputValue', 'name', 'label', 'disabled', 'validations',
+const props = defineProps([
+  'placeholder', 'inputValue', 'name', 'label', 'disabled', 'validations', 'errors'
 ]);
 const emit = defineEmits(['onFocus', 'onBlur', 'onChange']);
 
@@ -30,7 +30,7 @@ const onBlurHandler = (e) => {
 const onInputChangeHandler = (e) => {
 
   inputValue.value = e.target.value;
-  emit('onChange', inputValue.value);
+  // emit('onChange', inputValue.value);
 }
 
 /**
@@ -39,6 +39,10 @@ const onInputChangeHandler = (e) => {
 onMounted(() => {
   if (props.inputValue) {
     inputValue.value = props.inputValue;
+  }
+
+  if (props.errors && props.errors?.length > 0) {
+    invalid.value = props.errors[0].message;
   }
 });
 
@@ -60,11 +64,11 @@ watch(inputValue, () => {
 </script>
 
 <template>
-  <div>
+  <div class="form_control">
     <label v-if="props.label" 
     :for="props.name"
     :class="[
-      'font-medium-block mb-2',
+      'font-medium-block mb-4',
       (focus && !invalid) ? 'text-primary' : '',
       invalid ? 'text-danger' : ''
     ]"
@@ -78,7 +82,7 @@ watch(inputValue, () => {
           :name="props.name"
           v-model="inputValue"
           :placeholder="props.placeholder"
-          :disabled="props.disabled ? true : false"
+          :disabled="props.disabled"
           :class="[
             'form_control h-[120px] rounded-lg text-lg focus:outline-none transition duration-150 p-4 border border-gray-300',
             invalid ? 'invalid' : ''

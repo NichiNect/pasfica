@@ -1,14 +1,17 @@
 <script setup>
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
 /**
  * * Variables
  */
 const props = defineProps([
-  'type', 'placeholder', 'inputValue', 'name', 'label', 'icon', 'iconPosition', 'disabled', 'suggestionLists', 'validations'
+  'type', 'placeholder', 'inputValue', 'name', 'label', 'icon', 'iconPosition', 'disabled', 'suggestionLists', 'validations', 'errors'
 ]);
 const emit = defineEmits(['onFocus', 'onBlur', 'onChange']);
 const invalid = ref(null);
 const focus = ref(false);
 const inputValue = ref("");
+const type = ref('text');
 const suggestionLists = ref([]);
 const filteredSuggestions = ref([]);
 const activeSuggestion = ref(0);
@@ -97,6 +100,18 @@ onBeforeMount(() => {
   }
 });
 
+onMounted(() => {
+  if (props.type) {
+    type.value = props.type;
+  } else {
+    type.value = 'text';
+  }
+
+  if (props.errors && props.errors?.length > 0) {
+    invalid.value = props.errors[0].message;
+  }
+});
+
 watch(inputValue, () => {
 
   if (props.validations) {
@@ -115,7 +130,7 @@ watch(inputValue, () => {
 <template>
   <div :class="[
     'form_control',
-    disabled ? 'opacity-70' : '',
+    props.disabled ? 'opacity-70' : '',
   ]">
     <label :for="[props.name]" 
       :class="[
@@ -128,11 +143,12 @@ watch(inputValue, () => {
 
     <div class="relative">
       <input 
-        :type="props.type ? props.type : 'text'"
+        :type="type"
         v-model="inputValue"
         :placeholder="props.placeholder"
         :name="props.name"
-        :id="props.id"
+        :id="props.name"
+        :disabled="props.disabled"
         :class="[
           (props.iconPosition == 'right') ? 'pl-5 pr-14' : (props.icon) ? 'pl-16 pr-5' : 'pl-5 pr-5',
           invalid ? 'invalid' : ''
@@ -166,6 +182,24 @@ watch(inputValue, () => {
           invalid ? 'text-danger' : 'text-gray-400'
         ]"
       />
+
+      <FontAwesomeIcon 
+        v-if="props.type == 'password'" 
+        :icon="type == 'password' ? faEye : faEyeSlash"   
+        :class="[
+          'absolute text-xl top-1/2 -translate-y-1/2 right-1 mr-5',
+          'hover:cursor-pointer',
+          (focus && !invalid) ? 'text-primary' : '',
+          invalid ? 'text-danger' : 'text-gray-400'
+        ]"
+        @click="() => {
+          if (type == 'text') {
+            type = 'password';
+          } else {
+            type = 'text';
+          }
+        }"
+      />
     </div>
 
     <!-- Suggestions -->
@@ -187,7 +221,7 @@ watch(inputValue, () => {
     </div>
 
     <!-- Validations -->
-    <div v-if="props.validations" class="text-sm font-base text-danger mt-1 ml-1">
+    <div v-if="props.validations || props.errors" class="text-sm font-base text-danger mt-1 ml-1">
       {{ invalid }}
     </div>
 
