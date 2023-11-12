@@ -58,6 +58,11 @@ const menu = [
         submenu: [
           {
             icon: faCube,
+            label: "Menu 3 (Toast/Notif)",
+            path: "/toast",
+          },
+          {
+            icon: faCube,
             label: "Menu 6.1 (Kanban Card)",
             path: "/kanban",
           },
