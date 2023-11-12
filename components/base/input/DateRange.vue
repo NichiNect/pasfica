@@ -6,7 +6,7 @@ moment.locale('id');
  * * Variables
  */
 const props = defineProps([
-  'placeholder', 'inputValue', 'name', 'label', 'icon', 'iconPosition', 'disabled', 'useFormat', 'mode'
+  'placeholder', 'inputValue', 'name', 'label', 'icon', 'iconPosition', 'disabled', 'useFormat', 'mode', 'validations', 'errors'
 ]);
 const emit = defineEmits(['onFocus', 'onBlur', 'onChange']);
 
@@ -17,6 +17,7 @@ const dateRef = ref({
   start: moment(new Date()).subtract(3, 'day').format(),
   end: moment(new Date()).format(),
 });
+const invalid = ref(null);
 
 /**
  * * Methods
@@ -56,6 +57,24 @@ onMounted(() => {
   } else {
     formatDate.value = "DD-MM-YYYY";
   }
+
+ if (props.errors && props.errors?.length > 0) {
+    invalid.value = props.errors[0].message;
+  }
+});
+
+watch(inputValue, () => {
+
+  if (props.validations) {
+  
+    const validator = useValidator(props.validations, inputValue.value);
+    
+    if (validator.length > 0) {
+      invalid.value = validator[0];
+    } else {
+      invalid.value = null;
+    }
+  }
 });
 </script>
 
@@ -68,7 +87,8 @@ onMounted(() => {
     <label 
       :for="props.name"
       :class="[
-        focus ? 'text-primary' : ''
+        focus ? 'text-primary' : '',
+        invalid ? 'text-danger' : ''
       ]"
     >
       {{ props.label }}
@@ -84,7 +104,8 @@ onMounted(() => {
         "
         :placeholder="props.placeholder"
         :class="[
-          (props.iconPosition == 'right') ? 'pl-5 pr-14' : (props.icon) ? 'pl-16 pr-5' : 'pl-5 pr-5'
+          (props.iconPosition == 'right') ? 'pl-5 pr-14' : (props.icon) ? 'pl-16 pr-5' : 'pl-5 pr-5',
+          invalid ? 'invalid' : ''
         ]"
         :name="props.name"
         :id="props.name"
@@ -100,7 +121,8 @@ onMounted(() => {
         :class="[
           'absolute text-gray-400 text-xl top-1/2 -translate-y-1/2',
           (props.iconPosition == 'right') ? 'right-1 mr-5' : 'left-1 ml-5',
-          focus ? 'text-primary' : ''
+          (focus && !invalid) ? 'text-primary' : '',
+          invalid ? 'text-danger' : 'text-gray-400'
         ]"
       />
 
@@ -115,8 +137,8 @@ onMounted(() => {
         ></div>
         
         <div :class="[
-          'absolute z-30 w-full p-5 bg-white border-2 rounded-lg shadow-lg',
-          'right-0 translate-x-1/2'
+          'absolute z-30 w-1/2 p-5 bg-white border-2 rounded-lg shadow-lg',
+          'right-0 translate-x-1/4'
         ]">
 
             <VDatePicker
@@ -140,6 +162,11 @@ onMounted(() => {
             />
         </div>
       </div>
+    </div>
+
+    <!-- Validations -->
+    <div v-if="props.validations" class="text-sm font-base text-danger mt-1 ml-1">
+      {{ invalid }}
     </div>
   </div>
 </template>

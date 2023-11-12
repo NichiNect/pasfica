@@ -5,7 +5,7 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons';
  * * Variables
  */
 const props = defineProps([
-  'placeholder', 'inputValue', 'name', 'label', 'disabled', 'aspect'
+  'placeholder', 'inputValue', 'name', 'label', 'disabled', 'aspect', 'validations', 'errors'
 ]);
 const emit = defineEmits(['onChange']);
 
@@ -13,6 +13,7 @@ const dragActive = ref(false);
 const imageValid = ref(true);
 const image = ref(false);
 const inputFileRef = ref(null);
+const invalid = ref(null);
 
 /**
  * * Methods
@@ -61,6 +62,15 @@ const onChangeFileHandler = async (e) => {
   emit('onChange', imgFile);
 }
 
+/**
+ * * Hooks & Watchers
+ */
+onMounted(() => {
+
+  if (props.errors && props.errors?.length > 0) {
+    invalid.value = props.errors[0].message;
+  }
+});
 </script>
 
 <template>
@@ -116,5 +126,10 @@ const onChangeFileHandler = async (e) => {
         @drop="dropHandler"
       ></div>
     </label>
+
+    <!-- Validations -->
+    <div v-if="props.validations" class="text-sm font-base text-danger mt-1 ml-1">
+      {{ invalid }}
+    </div>
   </div>
 </template>
