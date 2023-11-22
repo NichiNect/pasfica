@@ -1,9 +1,14 @@
 <script setup>
 import { faSignIn } from '@fortawesome/free-solid-svg-icons';
+import { useAuthStore } from "@/stores/auth";
+
+const { $apiFetcher, $toast } = useNuxtApp();
+const auth = useAuthStore();
 
 /**
  * * Variables
  */
+const isLoading = ref(false);
 const formValue = ref({
   username: '',
   password: ''
@@ -12,9 +17,38 @@ const formValue = ref({
 /**
  * * Methods
  */
-const onSubmitHandler = () => {
+const onSubmitHandler = async () => {
   console.log('username:', formValue.value.username);
   console.log('password:', formValue.value.password);
+
+  try {
+
+    const { data } = await $apiFetcher.auth.login({
+      body: formValue.value,
+      onResponse({request, response, options}) {
+        if (response.status == 422) {
+          // validation errors
+          $toast.error('Validation error. Failed to login');
+        } else if (response.status == 401) {
+          // Unauthorize/Invalid
+          $toast.error(`Failed to login: ${response._data?.message}`);
+        } else if (response.status == 500) {
+          // Internal Backend Server Error
+          $toast.error(`Failed to login: Internal Server Error (${response._data?.message})`);
+        }
+      }
+    });
+
+    auth.login(data.value?.token?.token);
+    auth.setRefreshToken(data.value?.refresh_token);
+    auth.setUserData(data.value?.user);
+    auth.setExpired(data.value?.token?.expires_at);
+
+    navigateTo('/admin');
+  } catch(error) {
+  } finally {
+    isLoading.value = false;
+  }
 }
 </script>
 

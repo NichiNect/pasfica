@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
     'nuxt-swiper'
   ],
   plugins: [
@@ -15,8 +16,8 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      baseAPI: process.env.NUXT_PUBLIC_API_BASE,
-      baseURL: process.env.NUXT_PUBLIC_BASE_URL,
+      baseAPI: process.env.API_BASE_URL,
+      baseURL: process.env.APP_URL,
     },
   },
   ssr: true

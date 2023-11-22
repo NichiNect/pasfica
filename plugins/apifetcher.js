@@ -1,4 +1,5 @@
 // * Import Standard Repositories
+import authRepository from "@/repositories/authRepository";
 import categoryRepository from "@/repositories/categoryRepository";
 
 // * Import Custom Repositories
@@ -8,6 +9,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const modules = {
     // * Standard Repository
+    auth: authRepository,
     category: categoryRepository,
 
     // * Custom Repository

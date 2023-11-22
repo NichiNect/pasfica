@@ -1,11 +1,11 @@
-const useApiFetch = (method, url, options = {}, mode = 'standard') => {
+const useApiFetch = (method, url, options = {}, mode = "standard") => {
   const runtimeConfig = useRuntimeConfig();
   // const token = useCookie('token');
 
   const requestOptions = {
     ...options,
     method,
-    baseURL: runtimeConfig.public.apiBase,
+    baseURL: runtimeConfig.public.baseAPI,
     watch: false
   };
 
