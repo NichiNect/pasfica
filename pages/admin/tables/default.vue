@@ -85,7 +85,7 @@ const onPaginateChange = (data) => {
 
   <hr class="mt-5 mb-3">
 
-  <div>
+  <div class="px-4">
     <BaseTableDefault
       :data="tableData"
       :actions="[

@@ -173,7 +173,7 @@ await getData();
 
   <BaseLoading v-if="isLoading.list" class="p-20" />
 
-  <div v-if="!isLoading.list">
+  <div v-if="!isLoading.list" class="px-4">
     <BaseTableDefault
       :data="tableData"
       :actions="[

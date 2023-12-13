@@ -24,10 +24,17 @@
     @apply bg-gray-200;
 }
 
+tr td:first-child {
+    @apply rounded-l-xl;
+}
+
+tr td:last-child {
+    @apply rounded-r-xl;
+}
 
 .table > thead > tr > th,
 .table > tbody > tr > td {
-	@apply px-5 whitespace-nowrap;
+	@apply px-5 whitespace-nowrap overflow-hidden;
 }
 
 .table > thead > tr > th {

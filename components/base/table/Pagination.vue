@@ -54,6 +54,7 @@ const paginateChangeHandler = () => {
       isLast: props.pageActive + 1 < totalPage && totalPage > 3,
       totalPage: totalPage
     }
+
   } else {
 
     paginateData.value = {
@@ -68,9 +69,17 @@ const paginateChangeHandler = () => {
 /**
  * * Hooks & Watcher
  */
+// watch(
+//   [() => props.paginateRow, () => props.pageActive],
+//   () => {
+//   console.log('called');
+//   paginateChangeHandler();
+// });
+
 watchEffect(() => {
   paginateChangeHandler();
 });
+
 </script>
 
 <template>
@@ -106,7 +115,7 @@ watchEffect(() => {
         :key="idx"
         :class="[
           'py-1.5 px-3 rounded-md',
-          page == props.pageActive ? 'bg-lightPrimary text-primary' : 'bg-white cursor-pointer',
+          page == props.pageActive ? 'bg-lightPrimary text-white' : 'bg-white cursor-pointer',
           'hover:scale-105'
         ]"
         @click="emit('onChange', {
@@ -123,7 +132,7 @@ watchEffect(() => {
         v-if="paginateData.isLast" 
         :class="[
           'py-1.5 px-3 rounded-md',
-          paginateData.totalPage == props.pageActive ? 'bg-lightPrimary text-primary' : 'bg-white cursor-pointer',
+          paginateData.totalPage == props.pageActive ? 'bg-lightPrimary text-white' : 'bg-white cursor-pointer',
           'hover:scale-105'
         ]"
         @click="emit('onChange', {

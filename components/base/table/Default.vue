@@ -1,11 +1,13 @@
 <script setup>
-import { faEdit, faEye, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEye, faSearch, faToggleOff, faToggleOn, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+const { $toast } = useNuxtApp();
 
 /**
  * * Variables
  */
-const props = defineProps(['withoutSearch', 'actions', 'data', 'actionDetailUrl', 'actionDeleteUrl']);
-const emit = defineEmits(["onClose", "onDetail", "onEdit", "onDelete", "onSearchChange"]);
+const props = defineProps(['tableName', 'withoutSearch', 'actions', 'customActions', 'data', 'actionDetailUrl', 'actionDeleteUrl', 'searchInput']);
+const emit = defineEmits(["onClose", "onDetail", "onEdit", "onDelete", "onSearchChange", "onCustomProcess", "onCustomActiveStatus"]);
 
 const modalDetailShow = ref(false);
 const modalDeleteShow = ref(false);
@@ -51,9 +53,6 @@ const modalDeleteHandler = (row) => {
 
 const confirmDelete = async () => {
 
-  // do something..
-  emit('onDelete', rowActive.value);
-
   isLoading.value = true;
 
   try {
@@ -62,10 +61,13 @@ const confirmDelete = async () => {
       onResponse({request, response, options}) {
         if (response.status == 200) {
           // success
-          alert('Success delete data');
+          $toast.success('Success delete data');
+        } else if (response.status == 403) {
+          // forbidden
+          $toast.error(response._data?.message);
         } else {
           // failed
-          alert('Failed delete data');
+          $toast.error('Failed to delete data');
         }
       }
     });
@@ -74,6 +76,8 @@ const confirmDelete = async () => {
   } finally {
     isLoading.value = false;
   }
+
+  emit('onDelete', rowActive.value);
 
   rowActive.value = null;
   modalDeleteShow.value = false;
@@ -131,26 +135,33 @@ watch(searchInput, () => {
 </script>
 
 <template>
-  <div class="container my-2">
+  <div class="my-2">
     <div class="grid grid-cols-2 gap-2 items-center">
       <div class="col-span-2 md:col-span-1">
-        <slot name="topLeftElement" />
+        <div class="flex gap-3 justify-end lg:justify-start items-center">
+          <slot name="topLeftElement" />
+        </div>
       </div>
       <div class="col-span-2 md:col-span-1">
-        <div class="flex md:justify-end items-center">
+        <div class="flex gap-3 justify-end items-center">
           <slot name="topRightElement" />
 
           <div v-if="!props.withoutSearch" class="w-1/3 -translate-y-1">
             <BaseInputDefault
-              name="search"
+              :name="`${props.tableName}search`"
               placeholder="Search.."
               iconPosition="right"
+              :inputValue="props.searchInput"
               :icon="faSearch"
               @onChange="(e) => searchInput = e.value"
             />
           </div>
         </div>
       </div>
+    </div>
+
+    <div>
+      <slot name="middle" />
     </div>
 
     <div class="overflow-auto scroll_control my-2">
@@ -182,42 +193,61 @@ watch(searchInput, () => {
               </td>
               <td 
                 v-if="Array.isArray(props?.actions) && props?.actions?.length > 0"
-                class="flex items-center justify-center gap-2"
               >
-                <div v-if="props?.actions?.includes('detail')">
-                  <BaseButton
-                    variant="squareIcon"
-                    color="secondary"
-                    size="sm"
-                    @onClick="modalDetailHandler(row)"
-                  >
-                    <FontAwesomeIcon :icon="faEye" />
-                  </BaseButton>
-                </div>
-                <div v-if="props?.actions?.includes('edit')">
-                  <BaseButton
-                    variant="squareIcon"
-                    color="success"
-                    size="sm"
-                    @onClick="editHandler(row)"
-                  >
-                    <FontAwesomeIcon :icon="faEdit" />
-                  </BaseButton>
-                </div>
-                <div v-if="props?.actions?.includes('delete')">
-                  <BaseButton
-                    variant="squareIcon"
-                    color="danger"
-                    size="sm"
-                    @onClick="modalDeleteHandler(row)"
-                  >
-                    <FontAwesomeIcon :icon="faTrash" />
-                  </BaseButton>
+                <div class="flex gap-2">
+                  <div v-if="props.customActions && props.customActions?.length > 0" v-for="customAction in props.customActions">
+                    <BaseButton
+                      variant="squareIcon"
+                      :color="customAction?.color ?? 'success'"
+                      size="sm"
+                      @onClick="() => {
+                        emit(`onCustom${customAction?.name?.charAt(0)?.toUpperCase() + customAction?.name?.slice(1)}`, row);
+                      }"
+                    >
+                      <div v-if="customAction.name == 'activeStatus'">
+                        <FontAwesomeIcon :icon="row?.active_status ? faToggleOn : faToggleOff" />
+                      </div>
+                      <div v-else>
+                        <FontAwesomeIcon :icon="customAction?.icon" />
+                      </div>
+                    </BaseButton>
+                  </div>
+                  <div v-if="props?.actions?.includes('detail')">
+                    <BaseButton
+                      variant="squareIcon"
+                      color="secondary"
+                      size="sm"
+                      @onClick="modalDetailHandler(row)"
+                    >
+                      <FontAwesomeIcon :icon="faEye" />
+                    </BaseButton>
+                  </div>
+                  <div v-if="props?.actions?.includes('edit')">
+                    <BaseButton
+                      variant="squareIcon"
+                      color="success"
+                      size="sm"
+                      @onClick="editHandler(row)"
+                    >
+                      <FontAwesomeIcon :icon="faEdit" />
+                    </BaseButton>
+                  </div>
+                  <div v-if="props?.actions?.includes('delete')">
+                    <BaseButton
+                      variant="squareIcon"
+                      color="danger"
+                      size="sm"
+                      @onClick="modalDeleteHandler(row)"
+                    >
+                      <FontAwesomeIcon :icon="faTrash" />
+                    </BaseButton>
+                  </div>
                 </div>
               </td>
             </tr>
+
             <tr v-else>
-              <td :colspan="dataTable?.dataColumns?.length + 1">
+              <td :colspan="props.actions ? dataTable?.dataColumns?.length + 2 : dataTable?.dataColumns?.length + 1">
                 <div class="flex flex-col justify-center items-center my-3">
                   <img src="/svg/no-data.svg" alt="Data not Found" class="w-1/4">
                   <h5 class="my-7 text-2xl font-bold">Data Not Found</h5>
