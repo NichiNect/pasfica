@@ -3,19 +3,19 @@
  * * Variables
  */
 const props = defineProps([
-  'placeholder', 'inputValue', 'name', 'label', 'icon', 'iconPosition', 'disabled', 'minValue', 'maxLength'
+  'placeholder', 'inputValue', 'name', 'label', 'icon', 'iconPosition', 'disabled', 'minValue', 'maxLength', 'validations', 'errors'
 ]);
 const emit = defineEmits(['onFocus', 'onBlur', 'onChange']);
 
 const focus = ref(false);
 const inputValue = ref('');
+const invalid = ref(null);
 
 /**
  * * Methods
  */
 const onKeyUpHandler = (e) => {
 
-  console.log('e', e.target.value);
   if (e.target.value.length < (props.maxLength || 18)) {
 
     inputValue.value = formatRupiah(e.target.value);
@@ -53,15 +53,30 @@ const formatRupiah = (val) => {
 /**
  * * Hooks & Watcher
  */
-onBeforeMount(() => {
+onMounted(() => {
+
   if (props.inputValue) {
     inputValue.value = props.inputValue;
+  }
+
+  if (props.errors && props.errors?.length > 0) {
+    invalid.value = props.errors[0].message;
   }
 });
 
 watch(inputValue, (current, before) => {
 
-  // console.log('va', inputValue.value);
+  if (props.validations) {
+   
+   const validator = useValidator(props.validations, inputValue.value);
+   
+   if (validator.length > 0) {
+     invalid.value = validator[0];
+   } else {
+     invalid.value = null;
+   }
+ }
+
   emit('onChange', inputValue);
 });
 </script>
@@ -75,7 +90,8 @@ watch(inputValue, (current, before) => {
     <label 
       :for="props.name"
       :class="[
-        focus ? 'text-primary' : ''
+        (focus && !invalid) ? 'text-primary' : '',
+        invalid ? 'text-danger' : ''
       ]"
     >
       {{ props.label }}
@@ -88,7 +104,8 @@ watch(inputValue, (current, before) => {
         :value="inputValue"
         :placeholder="props.placeholder"
         :class="[
-          (props.iconPosition == 'right') ? 'pl-14 pr-14' : (props.icon) ? 'pl-24 pr-5' : 'pl-14 pr-5'
+          (props.iconPosition == 'right') ? 'pl-14 pr-14' : (props.icon) ? 'pl-24 pr-5' : 'pl-14 pr-5',
+          invalid ? 'invalid' : ''
         ]"
         :name="props.name"
         :id="props.name"
@@ -121,6 +138,11 @@ watch(inputValue, (current, before) => {
       ]">
         Rp.
       </div>
+    </div>
+
+    <!-- Validations -->
+    <div v-if="props.validations || props.errors" class="text-sm font-base text-danger mt-1 ml-1">
+      {{ invalid }}
     </div>
   </div>
 </template>
