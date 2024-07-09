@@ -117,7 +117,7 @@ watch(inputValue, () => {
   if (props.validations) {
    
     const validator = useValidator(props.validations, inputValue.value);
-    
+
     if (validator.length > 0) {
       invalid.value = validator[0];
     } else {
@@ -132,7 +132,7 @@ watch(inputValue, () => {
     'form_control',
     props.disabled ? 'opacity-70' : '',
   ]">
-    <label :for="[props.name]" 
+    <label :for="props.name" 
       :class="[
         (focus && !invalid) ? 'text-primary' : '',
         invalid ? 'text-danger' : ''

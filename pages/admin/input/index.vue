@@ -202,5 +202,22 @@ const remember = ref(false);
         searchQueryKey: 'search',
       }"
     />
+    <BaseInputSelect2
+      name="productCategory"
+      label="Category Product Super"
+      placeholder="Choose One"
+      :searchable="true"
+      :multiple="true"
+      :inputValue="{
+        label: 'Computer',
+        value: 'computer',
+      }"
+      :serverSideControl="{
+        apiUrl: `http://localhost:3000/api/picklist/categories`,
+        searchQueryKey: 'search',
+      }"
+      :validations="['required']"
+      @onChange="(val) => console.log('onchange val', val)"
+    />
   </div>
 </template>
