@@ -36,7 +36,7 @@ watch([wrapProfile, profile], () => {
     </div>
 
     <div class="flex gap-4">
-      <div class="flex items-center gap-3 lg:gap-5 px-4" @mousedown="() => {
+      <div class="flex items-center gap-3 lg:gap-5 hover:cursor-pointer px-4" @mousedown="() => {
         profile = !profile;
       }">
         <div class="h-10 bg-white rounded-full aspect-quare overflow-hidden">

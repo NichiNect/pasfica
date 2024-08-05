@@ -21,7 +21,7 @@
         <h1
           class="text-black dark:text-white text-4xl sm:text-5xl font-semibold text-center"
         >
-          Welcome to Nuxt-Comp!
+          Welcome to Pasfica!
         </h1>
       </div>
       <div class="grid grid-cols-2 lg:grid-cols-10 gap-6 max-w-[960px] px-4">
@@ -176,7 +176,7 @@
         >
           <div class="flex flex-col-reverse items-center gap-3 sm:flex-row">
             <span class="text-sm text-gray-700 dark:text-gray-300">
-              &copy; {{ new Date().getFullYear() }} Nuxt Comp - MIT License
+              &copy; {{ new Date().getFullYear() }} Pasfica - MIT License
             </span>
           </div>
         </div>

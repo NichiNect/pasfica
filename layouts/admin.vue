@@ -27,8 +27,8 @@ const menu = [
           },
           {
             icon: faCube,
-            label: "Menu 1.2",
-            path: "/1.2",
+            label: "Menu 1.2 (Calendar)",
+            path: "/input/calendar",
           },
         ]
       },
