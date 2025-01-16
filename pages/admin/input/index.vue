@@ -1,5 +1,5 @@
 <script setup>
-import { faCalendarAlt, faKey, faMoneyBillWave, faPhoneAlt, faSortAmountAsc, faUser, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faMoneyBillWave, faPhoneAlt, faSortAmountAsc, faUser, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * * Layouts
@@ -31,8 +31,6 @@ const remember = ref(false);
       name="password"
       label="Password"
       placeholder="Fill your password.."
-      iconPosition="right"
-      :icon="faKey"
     />
     <BaseInputDefault
       type="text"

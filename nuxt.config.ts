@@ -5,7 +5,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
-    'nuxt-swiper'
+    '@pinia-plugin-persistedstate/nuxt',
+    'nuxt-swiper',
   ],
 
   plugins: [
@@ -26,5 +27,8 @@ export default defineNuxtConfig({
   },
 
   ssr: true,
-  compatibilityDate: '2024-07-03'
+  compatibilityDate: '2024-07-03',
+  piniaPersistedstate: {
+    storage: 'localStorage'
+  },
 })
