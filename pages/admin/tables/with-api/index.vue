@@ -118,10 +118,11 @@ const onPaginateChange = async (data) => {
 
   paginateData.value = data;
 
-  queryParams.value = {
-    ...queryParams.value,
-    page: paginateData.value.pageActive
-  }
+  // queryParams.value = {
+  //   ...queryParams.value,
+  //   page: paginateData.value.pageActive
+  // }
+  queryParams.value.page = paginateData.value.pageActive
 
   await getData({
     query: queryParams.value

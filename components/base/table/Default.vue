@@ -6,7 +6,27 @@ const { $toast } = useNuxtApp();
 /**
  * * Variables
  */
-const props = defineProps(['tableName', 'withoutSearch', 'actions', 'customActions', 'data', 'actionDetailUrl', 'actionDeleteUrl', 'searchInput']);
+// const props = defineProps(['tableName', 'withoutSearch', 'actions', 'customActions', 'data', 'actionDetailUrl', 'actionDeleteUrl', 'searchInput']);
+/**
+ * customActions: [
+ *  {
+ *    name: String,
+ *    color: String,
+ *    icon: FAIcon
+ *  }
+ * ]
+ */
+const props = defineProps({
+  tableName: String | required,
+  ignoreDetailColumn: Array,
+  withoutSearch: Boolean,
+  actions: Array,
+  customActions: Array,
+  data: Array,
+  actionDetailUrl: Function,
+  actionDeleteUrl: Function,
+  searchInput: String
+});
 const emit = defineEmits(["onClose", "onDetail", "onEdit", "onDelete", "onSearchChange", "onCustomProcess", "onCustomActiveStatus"]);
 
 const modalDetailShow = ref(false);
@@ -58,7 +78,7 @@ const confirmDelete = async () => {
   try {
 
     const { data } = await props.actionDeleteUrl(rowActive.value, {
-      onResponse({request, response, options}) {
+      onResponse({request, response}) {
         if (response.status == 200) {
           // success
           $toast.success('Success delete data');
@@ -91,7 +111,7 @@ const editHandler = (row) => {
  * * Hooks & Watcher
  */
 onMounted(() => {
-  
+
   if (props.data) {
     dataTable.value = props.data;
   }

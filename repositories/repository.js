@@ -28,7 +28,7 @@ const useApiFetch = async (method, url, options = {}, mode = "standard") => {
   //   }
   // }
 
-  return useFetch(url, requestOptions);
+  return useFetch(url, requestOptions, () => $fetch);
 }
 
 // async function checkTimeOut() {
